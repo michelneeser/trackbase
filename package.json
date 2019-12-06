@@ -1,0 +1,12 @@
+{
+  "name": "ustats",
+  "version": "0.1.0",
+  "author": "Michel Neeser",
+  "private": true,
+  "scripts": {
+    "start": "concurrently 'npm run start-dev --prefix server' 'npm start --prefix client'"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0"
+  }
+}

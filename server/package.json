@@ -1,0 +1,16 @@
+{
+  "name": "ustats-server",
+  "version": "0.1.0",
+  "author": "Michel Neeser",
+  "private": true,
+  "scripts": {
+    "start": "node server",
+    "start-dev": "nodemon server"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  }
+}
