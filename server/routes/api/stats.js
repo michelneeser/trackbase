@@ -9,7 +9,10 @@ const router = express.Router();
 router.get('/', (req, res) => {
   Stat.find()
     .then(stats => res.json(stats))
-    .catch(err => console.log(err));
+    .catch(err => {
+      res.status(500).json({ msg: 'Error while getting all stats' });
+      console.error(err);
+    });
 });
 
 // @route    POST /api/stats
@@ -18,7 +21,10 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   new Stat().save()
     .then(stat => res.json(stat))
-    .catch(err => console.log(err));
+    .catch(err => {
+      res.status(500).json({ msg: 'Error while creating new stat' });
+      console.error(err);
+    });
 });
 
 // @route    GET /api/stats/:statId/values
@@ -28,7 +34,10 @@ router.get('/:statId/values', (req, res) => {
   const statId = req.params.statId;
   Stat.findById(statId)
     .then(stat => res.json(stat.values))
-    .catch(err => console.log(err));
+    .catch(err => {
+      res.status(404).json({ msg: 'Stat not found' });
+      console.error(err);
+    });
 });
 
 // @route    POST /api/stats/:statId/values
@@ -44,12 +53,15 @@ router.post('/:statId/values', (req, res) => {
 
   Stat.findById(statId)
     .then(stat => {
-      stat.values = [...stat.values, String(payload.value)];
+      stat.values = [...stat.values, { value: String(payload.value) }];
       stat.save()
         .then(res.json(stat))
         .catch(err => console.log(err));
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      res.status(404).json({ msg: 'Stat not found' });
+      console.error(err);
+    });
 });
 
 module.exports = router;

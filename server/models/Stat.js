@@ -7,9 +7,9 @@ const statSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  values: {
-    type: Array
-  }
+  values: [
+    { value: String, date: { type: Date, default: Date.now } }
+  ]
 });
 
 module.exports = mongoose.model('stat', statSchema);
