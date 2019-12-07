@@ -1,14 +1,19 @@
 const express = require('express');
-// const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const config = require('config');
 
 const app = express();
+app.use(express.json());
 
-// app.use(bodyParser.json());
+// connect to MongoDB
+const db = config.get("mongoDB.url");
+mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("connected to MongoDB"))
+  .catch(err => console.log(err));
 
-app.get('/', (req, res) => {
-  res.send('<strong>Hello!</strong>');
-});
+// set up routes
+app.use('/api/stats', require('./routes/api/stats'));
 
+// start server
 const port = process.env.PORT || 5000;
-
 app.listen(port, () => console.log(`uStats server started on port ${port}`));
