@@ -1,4 +1,4 @@
-# ustats
+# uStats
 the uStats platform
 
 ## Feature ideas
