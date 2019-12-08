@@ -1,5 +1,6 @@
 const express = require('express');
 const Stat = require('../../models/Stat');
+const randomstring = require('randomstring');
 
 const router = express.Router();
 
@@ -20,7 +21,13 @@ router.get('/', (req, res) => {
 // @access   public
 router.post('/', (req, res) => {
   new Stat().save()
-    .then(stat => res.json(stat))
+    .then(stat => {
+      const statToReturn = {
+        statId: stat.statId,
+        created: stat.created
+      };
+      res.json(statToReturn);
+    })
     .catch(err => {
       res.status(500).json({ msg: 'Error while creating new stat' });
       console.error(err);

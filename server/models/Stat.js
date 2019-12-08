@@ -1,15 +1,26 @@
 const mongoose = require('mongoose');
+const randomstring = require('randomstring');
 
-const Schema = mongoose.Schema;
+let generateStatId = () => {
+  return randomstring.generate({
+    length: 12,
+    capitalization: 'lowercase'
+  });
+};
 
-const statSchema = new Schema({
-  createDate: {
+const statSchema = new mongoose.Schema({
+  statId: {
+    type: String,
+    default: generateStatId,
+    index: true
+  },
+  created: {
     type: Date,
     default: Date.now
   },
   values: [
-    { value: String, date: { type: Date, default: Date.now } }
+    { value: String, created: { type: Date, default: Date.now } }
   ]
 });
 
-module.exports = mongoose.model('stat', statSchema);
+module.exports = mongoose.model('statrec', statSchema);
