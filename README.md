@@ -15,4 +15,4 @@ the uStats platform
 * something with "log"
 
 ## MongoDB shell
-mongo "mongodb+srv://ustats-pgwns.mongodb.net/ustats" --username ustats
+    mongo "mongodb+srv://ustats-pgwns.mongodb.net/ustats" --username ustats
