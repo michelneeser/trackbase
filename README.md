@@ -11,3 +11,8 @@ the uStats platform
 ## Possible domains
 * ustats.io
 * estats.io
+* trackbase.io
+* something with "log"
+
+## MongoDB shell
+mongo "mongodb+srv://ustats-pgwns.mongodb.net/ustats" --username ustats
