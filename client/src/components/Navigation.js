@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 import createNewStatAndRedirect from '../utils/history';
 
@@ -37,13 +38,16 @@ class Navigation extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
-                <NavLink onClick={createNewStatAndRedirect.bind(this)}>Create</NavLink>
+                <StyledNavLink onClick={createNewStatAndRedirect.bind(this)}>Create</StyledNavLink>
               </NavItem>
               <NavItem>
                 <Link className="nav-link" to="/showroom">Showroom</Link>
               </NavItem>
               <NavItem>
                 <NavLink href="/login">Login</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/api">API</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
@@ -53,5 +57,9 @@ class Navigation extends React.Component {
   }
 
 }
+
+const StyledNavLink = styled(NavLink)`
+  cursor: pointer;
+`;
 
 export default Navigation;

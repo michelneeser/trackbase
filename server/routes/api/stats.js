@@ -73,10 +73,13 @@ router.post('/:statId/values', (req, res) => {
 
   Stat.findOne({ statId })
     .then(stat => {
-      stat.values = [...stat.values, {
-        valueId: stat.values.length + 1,
-        value: String(payload.value)
-      }];
+      stat.values = [
+        {
+          valueId: stat.values.length + 1,
+          value: String(payload.value)
+        },
+        ...stat.values
+      ];
       stat.save()
         .then(res.json(stat))
         .catch(err => console.log(err));
