@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import Navigation from './components/Navigation';
 import Welcome from './components/Welcome';
 import Stat from './components/Stat';
 import Showroom from './components/Showroom';
+
 import { Container } from 'reactstrap';
 
 class App extends React.Component {
@@ -11,15 +13,14 @@ class App extends React.Component {
     return (
       <Router>
         <div className="app">
-          <Navigation />
+          <Route component={Navigation} />
           <Container>
             <Route
               exact
               path="/"
               component={Welcome} />
             <Route
-              exact
-              path="/stat"
+              path="/stat/:statId"
               component={Stat} />
             <Route
               exact

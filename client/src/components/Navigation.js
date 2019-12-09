@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+import createNewStatAndRedirect from '../utils/history';
+
 import {
   Navbar,
   Container,
@@ -34,7 +37,7 @@ class Navigation extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
-                <Link className="nav-link" to="/stat">Create</Link>
+                <NavLink onClick={createNewStatAndRedirect.bind(this)}>Create</NavLink>
               </NavItem>
               <NavItem>
                 <Link className="nav-link" to="/showroom">Showroom</Link>

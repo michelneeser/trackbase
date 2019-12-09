@@ -19,7 +19,11 @@ const statSchema = new mongoose.Schema({
     default: Date.now
   },
   values: [
-    { value: String, created: { type: Date, default: Date.now } }
+    {
+      valueId: Number,
+      value: String,
+      created: { type: Date, default: Date.now }
+    }
   ]
 });
 

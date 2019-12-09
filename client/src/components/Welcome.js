@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
+import createNewStatAndRedirect from '../utils/history';
+
 import {
   Button,
   Row,
@@ -48,7 +50,7 @@ class Welcome extends React.Component {
         </Row>
         <Row className="mt-5">
           <Col className="text-center">
-            <Link className="nav-link" to="/stat"><Button color="info">Give me a stats page!</Button></Link>
+            <Button color="info" onClick={createNewStatAndRedirect.bind(this)}>Give me a stats page!</Button>
           </Col>
         </Row>
       </div>
