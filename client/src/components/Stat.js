@@ -10,7 +10,13 @@ import {
   Alert,
   Badge,
   Row,
-  Col
+  Col,
+  Form,
+  Input,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from 'reactstrap';
 
 class Stat extends React.Component {
@@ -19,7 +25,9 @@ class Stat extends React.Component {
     this.state = {
       stat: {},
       update: false,
-      alertText: ''
+      alertText: '',
+      nameModal: false,
+      nameModalValue: ''
     }
   }
 
@@ -37,14 +45,15 @@ class Stat extends React.Component {
     const statId = this.props.match.params.statId;
     axios.get(`/api/stats/${statId}`)
       .then(res => {
-        const data = res.data;
+        const stat = res.data;
+        stat.name = (!stat.name ? stat.statId : stat.name);
         const updatedState = {
-          stat: res.data,
+          stat,
           update: false
         };
         if (!initialLoading) {
-          const diff = (data.values.length - this.state.stat.values.length);
-          updatedState.alertText = (diff > 0) ? `${diff} new record${diff > 1 ? 's' : ''} added` : 'No updates available';
+          const diff = (stat.values.length - this.state.stat.values.length);
+          updatedState.alertText = (diff > 0) ? `${diff} new value${diff > 1 ? 's' : ''} added` : 'No updates available';
         }
         this.setState(updatedState);
       })
@@ -61,6 +70,21 @@ class Stat extends React.Component {
 
   dismissAlert = () => {
     this.setState({ alertText: '' })
+  }
+
+  toggleNameModal = () => {
+    this.setState(state => ({ nameModal: !state.nameModal }));
+  }
+
+  handleNameModalValueChange = (event) => {
+    this.setState({ nameModalValue: event.target.value });
+  }
+
+  saveName = (event) => {
+    const stat = this.state.stat;
+    stat.name = this.state.nameModalValue;
+    this.setState({ stat });
+    event.preventDefault();
   }
 
   render() {
@@ -94,11 +118,12 @@ class Stat extends React.Component {
         <Alert color="warning" isOpen={this.state.alertText !== ''} toggle={this.dismissAlert} fade={false}>
           {this.state.alertText}
         </Alert>
-        <Alert color="info" className="shadow p-3 mb-4 rounded">
+        <Alert color="secondary" className="shadow p-3 mb-4 rounded-0 border-0" fade={false}>
           <h4 className="alert-heading">General Info</h4>
           <div className="mt-2">
             <strong>Name: </strong>
-            <span>{this.state.stat.statId}</span>
+            <span>{this.state.stat.name}</span>
+            <Badge color="secondary" className="ml-2" onClick={this.toggleNameModal}>edit</Badge>
           </div>
           <div className="mt-2">
             <strong>URL: </strong>
@@ -112,16 +137,30 @@ class Stat extends React.Component {
         </Alert>
         <Row>
           <Col>
-            <Button color="dark" block outline onClick={this.update}>Update</Button>
+            <Button className="rounded-0" color="dark" block outline onClick={this.update}>Update</Button>
           </Col>
           <Col>
-            <Button color="danger" block outline>Delete</Button>
+            <Button className="rounded-0" color="danger" block outline>Delete</Button>
           </Col>
         </Row>
         <hr className="mt-5 mb-5" />
         <h4 className="alert-heading mb-4">Values</h4>
         {values}
-      </div >
+
+        <Modal isOpen={this.state.nameModal} toggle={this.toggleNameModal}>
+          <ModalHeader toggle={this.toggleNameModal}>Name your stat</ModalHeader>
+          <ModalBody>
+            <Form onSubmit={this.state.saveName}>
+              <Input type="text" name="name" className="rounded-0" placeholder="Name" aria-describedby="nameHelp"
+                value={this.state.nameModalValue} onChange={this.handleNameModalValueChange} />
+              <small id="nameHelp" className="form-text text-muted">Give your stat a cool name to identify it in the future :-)</small>
+              <ModalFooter className="mt-3">
+                <Button className="rounded-0" color="dark" onClick={this.toggleNameModal}>Save</Button>
+              </ModalFooter>
+            </Form>
+          </ModalBody>
+        </Modal>
+      </div>
     );
   }
 }
