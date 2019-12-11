@@ -9,7 +9,10 @@ let generateStatId = () => {
 };
 
 const statSchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    default: ''
+  },
   statId: {
     type: String,
     default: generateStatId,

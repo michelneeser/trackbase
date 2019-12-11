@@ -9,7 +9,7 @@ class Header extends React.Component {
     return (
       <div className="bg-dark py-5">
         <div>
-          <h1 className="display-1 text-center text-light">TrackBase</h1>
+          <h1 className="display-1 text-center text-light">uStats</h1>
           <p className="lead text-center text-light">The most simple stats service on the Internet.</p>
         </div>
         <div className="text-center mt-5">

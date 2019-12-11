@@ -42,7 +42,7 @@ router.get('/:statId', (req, res) => {
   Stat.findOne({ statId }, '-_id -__v -values._id')
     .then(stats => res.json(stats))
     .catch(err => {
-      res.status(404).json({ msg: 'Stat not found' });
+      setStatNotFound(res);
       console.error(err);
     });
 });
@@ -55,7 +55,7 @@ router.get('/:statId/values', (req, res) => {
   Stat.findOne({ statId }, '-_id -__v -values._id')
     .then(stat => res.json(stat.values))
     .catch(err => {
-      res.status(404).json({ msg: 'Stat not found' });
+      setStatNotFound(res);
       console.error(err);
     });
 });
@@ -68,7 +68,8 @@ router.post('/:statId/values', (req, res) => {
   const payload = req.body;
 
   if (!payload.value) {
-    return res.status(400).json({ msg: 'Please provide a value' });
+    setInvalidPayload(res);
+    return;
   }
 
   Stat.findOne({ statId })
@@ -82,12 +83,45 @@ router.post('/:statId/values', (req, res) => {
       ];
       stat.save()
         .then(res.json(stat))
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
     })
     .catch(err => {
-      res.status(404).json({ msg: 'Stat not found' });
+      setStatNotFound(res);
       console.error(err);
     });
 });
+
+// @route    POST /api/stats/:statId/name
+// @desc     updates the name of a stat
+// @access   public
+router.put('/:statId/name', (req, res) => {
+  const statId = req.params.statId;
+  const payload = req.body;
+
+  if (!payload.value) {
+    setInvalidPayload(res);
+    return;
+  }
+
+  Stat.findOne({ statId })
+    .then(stat => {
+      stat.name = payload.value;
+      stat.save()
+        .then(res.json(stat))
+        .catch(err => console.error(err));
+    })
+    .catch(err => {
+      setStatNotFound(res);
+      console.error(err);
+    })
+});
+
+setInvalidPayload = (res) => {
+  res.status(400).json({ msg: 'Invalid payload' });
+}
+
+setStatNotFound = (res) => {
+  res.status(404).json({ msg: 'Stat not found' });
+}
 
 module.exports = router;

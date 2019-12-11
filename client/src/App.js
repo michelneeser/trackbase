@@ -1,12 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import './App.css';
-
 import Navigation from './components/Navigation';
 import Header from './components/Header';
 import Welcome from './components/Welcome';
-import Stat from './components/Stat';
+import Stat from './components/stat/Stat';
 import Showroom from './components/Showroom';
 
 import { Container } from 'reactstrap';
