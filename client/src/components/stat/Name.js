@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
 import {
   Button,
@@ -18,6 +19,12 @@ class NameModal extends React.Component {
     this.state = {
       display: false,
       value: ''
+    }
+  }
+
+  componentDidMount = () => {
+    if (this.props.name) {
+      this.setState({ value: this.props.name });
     }
   }
 
@@ -47,7 +54,7 @@ class NameModal extends React.Component {
         <div className="mt-2">
           <strong>Name: </strong>
           <span>{nameToDisplay}</span>
-          <Badge color="secondary" className="ml-2 rounded-0" onClick={this.toggleNameModal}>edit</Badge>
+          <StyledBadge color="secondary" className="ml-2 rounded-0" onClick={this.toggleNameModal}>edit</StyledBadge>
         </div>
 
         <Modal isOpen={this.state.display} toggle={this.toggleNameModal}>
@@ -67,5 +74,9 @@ class NameModal extends React.Component {
     );
   }
 }
+
+const StyledBadge = styled(Badge)`
+  cursor: pointer;
+`;
 
 export default NameModal;

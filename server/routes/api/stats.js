@@ -1,6 +1,5 @@
 const express = require('express');
 const Stat = require('../../models/Stat');
-const randomstring = require('randomstring');
 
 const router = express.Router();
 

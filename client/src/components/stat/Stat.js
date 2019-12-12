@@ -1,12 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import styled from 'styled-components';
 
 import Title from '../Title';
 import Subtitle from '../Subtitle';
 import Name from './Name';
 import Hint from './Hint';
 
+import { Line } from 'react-chartjs-2';
 import {
   Button,
   Alert,
@@ -68,33 +70,11 @@ class Stat extends React.Component {
   }
 
   render() {
-    const stat = this.state.stat;
-
     // update hint
     let updateHintText = '';
     if (this.state.updatedValues > -1) {
       const nrOfUpdates = this.state.updatedValues;
       updateHintText = (nrOfUpdates > 0 ? `${nrOfUpdates} new value${nrOfUpdates > 1 ? 's' : ''} added` : 'No updates available');
-    }
-
-    // stat values
-    const values = [];
-    if (stat.statId) {
-      stat.values.forEach(value => {
-        values.push(
-          <Row key={value.valueId} className="border border-dark shadow-sm p-3 mb-3 bg-light rounded">
-            <Col xs="3">
-              {moment(value.created).format('MM/DD/YYYY, hh:mm:ss a')}
-            </Col>
-            <Col xs="8">
-              {value.value}
-            </Col>
-            <Col xs="1">
-              <Button color="danger">X</Button>
-            </Col>
-          </Row>
-        );
-      });
     }
 
     let content;
@@ -106,6 +86,43 @@ class Stat extends React.Component {
       );
     }
     else {
+      const stat = this.state.stat;
+
+      // data for chart
+      const chartLabels = stat.values.map(value => moment(value.created).format('MM/DD/YYYY, hh:mm:ss a'));
+      const chartValues = stat.values.map(value => value.value);
+
+      const chartData = {
+        labels: chartLabels,
+        datasets: [
+          {
+            data: chartValues,
+            backgroundColor: 'rgba(23, 163, 184, 0.5)'
+          }
+        ]
+      }
+
+      const chartOptions = {
+        legend: {
+          display: false
+        }
+      }
+
+      // data for value list
+      const listValues = stat.values.map(value => (
+        <Row key={value.valueId} className="border border-dark shadow-sm p-3 mb-3 bg-light rounded">
+          <Col xs="3">
+            {moment(value.created).format('MM/DD/YYYY, hh:mm:ss a')}
+          </Col>
+          <Col xs="8">
+            {value.value}
+          </Col>
+          <Col xs="1">
+            <Button color="danger">X</Button>
+          </Col>
+        </Row>
+      ));
+
       content = (
         <div>
           <Title text={stat.name ? stat.name : 'Your stat'} />
@@ -117,7 +134,7 @@ class Stat extends React.Component {
             <div className="mt-2">
               <strong>URL: </strong>
               <span>{window.location.href}</span>
-              <Badge color="secondary" className="ml-2 rounded-0">copy</Badge>
+              <StyledBadge color="secondary" className="ml-2 rounded-0">copy</StyledBadge>
             </div>
             <div className="mt-2">
               <strong>Created: </strong>
@@ -133,8 +150,14 @@ class Stat extends React.Component {
             </Col>
           </Row>
           <hr className="mt-5 mb-5" />
-          <h4 className="alert-heading mb-4">Values</h4>
-          {values}
+          <Line
+            data={chartData}
+            options={chartOptions} />
+          <hr className="mt-5 mb-5" />
+          <div>
+            <h4 className="alert-heading mb-4">Values</h4>
+            <div>{listValues}</div>
+          </div>
         </div>
       );
     }
@@ -142,9 +165,13 @@ class Stat extends React.Component {
     return (
       <React.Fragment>
         {content}
-      </React.Fragment>
+      </React.Fragment >
     );
   }
 }
+
+const StyledBadge = styled(Badge)`
+  cursor: pointer;
+`;
 
 export default Stat;
