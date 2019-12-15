@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import Navigation from './components/Navigation';
-import Header from './components/Header';
-import Welcome from './components/Welcome';
+import Navigation from './components/common/Navigation';
+import Header from './components/home/Header';
+import Features from './components/home/Features';
 import Stat from './components/stat/Stat';
-import Showroom from './components/Showroom';
+import Showroom from './components/showroom/Showroom';
 
-import { Container } from 'reactstrap';
+import './App.scss';
 
 class App extends React.Component {
   render() {
@@ -19,11 +19,11 @@ class App extends React.Component {
             exact
             path="/"
             component={Header} />
-          <Container>
+          <div className="container">
             <Route
               exact
               path="/"
-              component={Welcome} />
+              component={Features} />
             <Route
               path="/stat/:statId"
               component={Stat} />
@@ -31,9 +31,9 @@ class App extends React.Component {
               exact
               path="/showroom"
               component={Showroom} />
-          </Container>
+          </div>
         </div>
-      </Router >
+      </Router>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Title from './Title';
+import Title from '../common/Title';
 
 class Showroom extends React.Component {
   render() {

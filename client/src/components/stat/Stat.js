@@ -2,21 +2,12 @@ import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import styled from 'styled-components';
-
-import Title from '../Title';
-import Subtitle from '../Subtitle';
-import Name from './Name';
-import Hint from './Hint';
-
 import { Line } from 'react-chartjs-2';
-import {
-  Button,
-  Alert,
-  Badge,
-  Row,
-  Col,
-  Spinner
-} from 'reactstrap';
+
+import Title from '../common/Title';
+import Subtitle from '../common/Subtitle';
+import Name from './Name';
+import Notification from './Notification';
 
 class Stat extends React.Component {
   loading = true;
@@ -81,7 +72,9 @@ class Stat extends React.Component {
     if (this.loading) {
       content = (
         <div className="text-center mt-5">
-          <Spinner color="dark" />
+          <div className="spinner-border text-dark" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
         </div>
       );
     }
@@ -110,45 +103,41 @@ class Stat extends React.Component {
 
       // data for value list
       const listValues = stat.values.map(value => (
-        <Row key={value.valueId} className="border border-dark shadow-sm p-3 mb-3 bg-light rounded">
-          <Col xs="3">
+        <div key={value.valueId} className="row border shadow-sm p-3 mb-3">
+          <div className="col-md-4 my-auto">
             {moment(value.created).format('MM/DD/YYYY, hh:mm:ss a')}
-          </Col>
-          <Col xs="8">
+          </div>
+          <div className="col-md-7 my-auto">
             {value.value}
-          </Col>
-          <Col xs="1">
-            <Button color="danger">X</Button>
-          </Col>
-        </Row>
+          </div>
+          <div className="col-md-1 my-auto">
+            <button type="button" class="btn btn-danger">X</button>
+          </div>
+        </div>
       ));
 
       content = (
         <div>
           <Title text={stat.name ? stat.name : 'Your stat'} />
           <Subtitle text="This is your very own stats page - enjoy!" />
-          <Hint text={updateHintText} onDismiss={() => this.setState({ updatedValues: -1 })} />
-          <Alert color="secondary" className="shadow p-3 mb-4 rounded-0 border-0" fade={false}>
+          <div className="alert alert-warning p-3 mb-4 shadow" fade={false}>
             <h4 className="alert-heading">General Info</h4>
             <Name statId={stat.statId} name={stat.name} setName={this.setName} />
             <div className="mt-2">
               <strong>URL: </strong>
               <span>{window.location.href}</span>
-              <StyledBadge color="secondary" className="ml-2 rounded-0">copy</StyledBadge>
+              <StyledBadge className="badge badge-warning ml-2">copy</StyledBadge>
             </div>
             <div className="mt-2">
               <strong>Created: </strong>
               <span>{moment(stat.created).format('MMMM Do YYYY, hh:mm:ss a')}</span>
             </div>
-          </Alert>
-          <Row>
-            <Col>
-              <Button className="rounded-0" color="dark" block outline onClick={this.update}>Update</Button>
-            </Col>
-            <Col>
-              <Button className="rounded-0" color="danger" block outline>Delete</Button>
-            </Col>
-          </Row>
+          </div>
+          <div className="row">
+            <div className="col">
+              <button type="button" className="btn btn-primary btn-block" onClick={this.update}>Update</button>
+            </div>
+          </div>
           <hr className="mt-5 mb-5" />
           <Line
             data={chartData}
@@ -158,6 +147,12 @@ class Stat extends React.Component {
             <h4 className="alert-heading mb-4">Values</h4>
             <div>{listValues}</div>
           </div>
+          <div className="row">
+            <div className="col">
+              <button type="button" className="btn btn-danger btn-block">Delete</button>
+            </div>
+          </div>
+          <Notification title="❗️ Update" text={updateHintText} onDismiss={() => this.setState({ updatedValues: -1 })} />
         </div>
       );
     }
@@ -165,12 +160,12 @@ class Stat extends React.Component {
     return (
       <React.Fragment>
         {content}
-      </React.Fragment >
+      </React.Fragment>
     );
   }
 }
 
-const StyledBadge = styled(Badge)`
+const StyledBadge = styled.span`
   cursor: pointer;
 `;
 
