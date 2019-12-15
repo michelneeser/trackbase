@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import Octicon, { Heart } from '@primer/octicons-react';
 
 class Footer extends React.Component {
   render() {
     return (
-      <StyledFooter className="bg-dark text-light p-4">
+      <StyledFooter className="bg-dark text-light py-4">
         <div className="container text-muted">
           <div class="row">
             <div class="col-md-4">
-              <p>&copy; 2020 ustats.io<br />Developed in Switzerland</p>
+              <p>&copy; 2020 ustats.io</p>
+              <p>Crafted with <Octicon icon={Heart} size="small" /> in Switzerland</p>
             </div>
             <div class="col-md-4">
               <p>

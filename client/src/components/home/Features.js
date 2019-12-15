@@ -33,7 +33,7 @@ class Features extends React.Component {
             </div>
           </div>
         </div>
-        <hr className="mt-5 mb-5" />
+        <hr className="my-5" />
         <div className="row mt-3 px-5">
           <div className="col-md-8">
             <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sapien pellentesque habitant morbi tristique.</p>
@@ -42,7 +42,7 @@ class Features extends React.Component {
             <img src="https://place-hold.it/300" alt="placeholder" />
           </div>
         </div>
-        <hr className="mt-5 mb-5" />
+        <hr className="my-5" />
         <div className="row mt-3 px-5">
           <div className="col-md-8">
             <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sapien pellentesque habitant morbi tristique.</p>

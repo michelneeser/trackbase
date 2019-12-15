@@ -9,7 +9,5 @@
   "devDependencies": {
     "concurrently": "^5.0.0"
   },
-  "dependencies": {
-    "config": "^3.2.4"
-  }
+  "dependencies": {}
 }

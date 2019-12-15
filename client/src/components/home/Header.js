@@ -11,7 +11,7 @@ class Header extends React.Component {
           <p className="lead text-center text-light">with the most simple stats service on the Internet</p>
         </div>
         <div className="text-center mt-5">
-          <button type="button" className="btn btn-info" onClick={createNewStatAndRedirect.bind(this)}>Sounds great &mdash; give me a stats page</button>
+          <button type="button" className="btn btn-info" onClick={createNewStatAndRedirect.bind(this)}>give me a stats page</button>
         </div>
       </div>
     )
