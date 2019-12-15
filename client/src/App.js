@@ -6,6 +6,7 @@ import Header from './components/home/Header';
 import Features from './components/home/Features';
 import Stat from './components/stat/Stat';
 import Showroom from './components/showroom/Showroom';
+import Footer from './components/common/Footer';
 
 import './App.scss';
 
@@ -32,6 +33,7 @@ class App extends React.Component {
               path="/showroom"
               component={Showroom} />
           </div>
+          <Route component={Footer} />
         </div>
       </Router>
     );
