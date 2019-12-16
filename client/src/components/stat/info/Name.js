@@ -53,8 +53,8 @@ class NameModal extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <form onSubmit={this.save}>
-              <div class="form-group">
-                <p class="text-muted">Give your stat a nice name to identify it in the future</p>
+              <div className="form-group">
+                <p className="text-muted">Give your stat a nice name to identify it in the future</p>
                 <input type="text" className="form-control" name="name" placeholder="Name"
                   value={this.state.value} onChange={this.handleModalValueChange} />
               </div>

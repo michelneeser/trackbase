@@ -28,7 +28,7 @@ class Notification extends React.Component {
     return (
       <StyledToast className="rounded-lg" show={this.state.show} onClose={this.dismiss} autohide>
         <Toast.Header>
-          <strong className="mr-auto">{this.props.title}</strong>
+          <strong className="mr-auto">Notification</strong>
         </Toast.Header>
         <Toast.Body>
           {this.props.text}

@@ -7,12 +7,12 @@ class Footer extends React.Component {
     return (
       <StyledFooter className="bg-dark text-light py-4">
         <div className="container text-muted">
-          <div class="row">
-            <div class="col-md-4">
+          <div className="row">
+            <div className="col-md-4">
               <p>&copy; 2020 ustats.io</p>
               <p>Crafted with <Octicon icon={Heart} size="small" /> in Switzerland</p>
             </div>
-            <div class="col-md-4">
+            <div className="col-md-4">
               <p>
                 <StyledLink>Link 1</StyledLink>
                 <StyledLink>Link 2</StyledLink>
@@ -20,7 +20,7 @@ class Footer extends React.Component {
                 <StyledLink>Link 4</StyledLink>
               </p>
             </div>
-            <div class="col-md-4">
+            <div className="col-md-4">
               <p>Some text</p>
             </div>
           </div>

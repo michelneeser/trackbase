@@ -22,6 +22,7 @@ router.post('/', (req, res) => {
   new Stat().save()
     .then(stat => {
       const statToReturn = {
+        name: stat.name,
         statId: stat.statId,
         created: stat.created
       };
@@ -81,7 +82,16 @@ router.post('/:statId/values', (req, res) => {
         ...stat.values
       ];
       stat.save()
-        .then(res.json(stat))
+        .then(stat => {
+          const statValues = stat.values.map(value => (
+            {
+              valueId: value.valueId,
+              value: value.value,
+              created: value.created
+            }
+          ));
+          res.json(statValues);
+        })
         .catch(err => console.error(err));
     })
     .catch(err => {
@@ -106,7 +116,7 @@ router.put('/:statId/name', (req, res) => {
     .then(stat => {
       stat.name = payload.value;
       stat.save()
-        .then(res.json(stat))
+        .then(stat => res.json(stat))
         .catch(err => console.error(err));
     })
     .catch(err => {
@@ -114,6 +124,8 @@ router.put('/:statId/name', (req, res) => {
       console.error(err);
     })
 });
+
+// Utility functions
 
 setInvalidPayload = (res) => {
   res.status(400).json({ msg: 'Invalid payload' });
