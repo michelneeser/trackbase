@@ -55,11 +55,28 @@ class Stat extends React.Component {
   }
 
   addValue = (value) => {
-    const stat = this.state.stat;
-    this.setState(state => (
-      { stat: { ...state.stat, values: [value, ...stat.values] } }
-    ));
-  }
+    this.setState(state => {
+      const stat = state.stat;
+      return {
+        stat: {
+          ...stat,
+          values: [value, ...stat.values]
+        }
+      }
+    });
+  };
+
+  deleteValue = (valueId) => {
+    this.setState(state => {
+      const stat = state.stat;
+      return {
+        stat: {
+          ...stat,
+          values: stat.values.filter(value => value.valueId !== valueId)
+        }
+      }
+    });
+  };
 
   setName = (name) => {
     this.setState(state => (
@@ -106,7 +123,10 @@ class Stat extends React.Component {
           <Chart values={stat.values} />
 
           <hr className="my-5" />
-          <ValueList values={stat.values} />
+          <ValueList
+            statId={stat.statId}
+            values={stat.values}
+            deleteValue={this.deleteValue} />
 
           <div className="row mt-5">
             <div className="col">

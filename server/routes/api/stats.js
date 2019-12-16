@@ -1,5 +1,6 @@
 const express = require('express');
 const Stat = require('../../models/Stat');
+const generateUniqueID = require('../../utils/id-generator');
 
 const router = express.Router();
 
@@ -76,11 +77,44 @@ router.post('/:statId/values', (req, res) => {
     .then(stat => {
       stat.values = [
         {
-          valueId: stat.values.length + 1,
+          valueId: generateUniqueID(),
           value: String(payload.value)
         },
         ...stat.values
       ];
+      stat.save()
+        .then(stat => {
+          const statValues = stat.values.map(value => (
+            {
+              valueId: value.valueId,
+              value: value.value,
+              created: value.created
+            }
+          ));
+          res.json(statValues);
+        })
+        .catch(err => console.error(err));
+    })
+    .catch(err => {
+      setStatNotFound(res);
+      console.error(err);
+    });
+});
+
+// @route    DELETE /api/stats/:statId/values/:valueId
+// @desc     deletes a single value from a stat
+// @access   public
+router.delete('/:statId/values/:valueId', (req, res) => {
+  const { statId, valueId } = req.params;
+  Stat.findOne({ statId })
+    .then(stat => {
+      const nrOfValuesBefore = stat.values.length;
+      stat.values = stat.values.filter(value => value.valueId != valueId);
+      if (stat.values.length === nrOfValuesBefore) {
+        setValueNotFound(res);
+        return;
+      }
+
       stat.save()
         .then(stat => {
           const statValues = stat.values.map(value => (
@@ -133,6 +167,10 @@ setInvalidPayload = (res) => {
 
 setStatNotFound = (res) => {
   res.status(404).json({ msg: 'Stat not found' });
+}
+
+setValueNotFound = (res) => {
+  res.status(404).json({ msg: 'Value not found' });
 }
 
 module.exports = router;

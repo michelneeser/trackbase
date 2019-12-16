@@ -1,12 +1,5 @@
 const mongoose = require('mongoose');
-const randomstring = require('randomstring');
-
-let generateStatId = () => {
-  return randomstring.generate({
-    length: 12,
-    capitalization: 'lowercase'
-  });
-};
+const generateUniqueID = require('../utils/id-generator');
 
 const statSchema = new mongoose.Schema({
   name: {
@@ -15,7 +8,7 @@ const statSchema = new mongoose.Schema({
   },
   statId: {
     type: String,
-    default: generateStatId,
+    default: generateUniqueID,
     index: true
   },
   created: {
@@ -24,7 +17,7 @@ const statSchema = new mongoose.Schema({
   },
   values: [
     {
-      valueId: Number,
+      valueId: String,
       value: String,
       created: { type: Date, default: Date.now }
     }
