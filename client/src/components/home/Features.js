@@ -36,7 +36,7 @@ class Features extends React.Component {
         <hr className="my-5" />
         <div className="row mt-3 px-5">
           <div className="col-md-8">
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sapien pellentesque habitant morbi tristique.</p>
+            <p className="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sapien pellentesque habitant morbi tristique.</p>
           </div>
           <div className="col-md-4">
             <img src="https://place-hold.it/300" alt="placeholder" />
@@ -45,7 +45,7 @@ class Features extends React.Component {
         <hr className="my-5" />
         <div className="row mt-3 px-5">
           <div className="col-md-8">
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sapien pellentesque habitant morbi tristique.</p>
+            <p className="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sapien pellentesque habitant morbi tristique.</p>
           </div>
           <div className="col-md-4">
             <img src="https://place-hold.it/300" alt="placeholder" />

@@ -1,10 +1,10 @@
 const randomstring = require('randomstring');
 
-function generateUniqueID() {
+function generateId() {
   return randomstring.generate({
     length: 12,
     capitalization: 'lowercase'
   });
 };
 
-module.exports = generateUniqueID;
+module.exports = generateId;
