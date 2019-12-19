@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 const generateId = require('../utils/id-generator');
 
+const transform = {
+  transform: (doc, ret) => {
+    delete ret._id;
+    delete ret.__v;
+  }
+};
+
 const statSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -15,23 +22,18 @@ const statSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  values: [
-    {
-      valueId: { type: String, default: generateId },
-      value: String,
-      created: { type: Date, default: Date.now }
-    }
-  ]
-}, {
-  toJSON: {
-    transform: (doc, ret) => {
-      delete ret._id;
-      delete ret.__v;
-      ret.values.forEach(value => {
-        delete value._id;
-      });
-    }
+  values: {
+    data: [
+      {
+        valueId: { type: String, default: generateId },
+        value: String,
+        created: { type: Date, default: Date.now }
+      }
+    ]
   }
+}, {
+  toObject: transform,
+  toJSON: transform
 });
 
 module.exports = mongoose.model('record', statSchema);

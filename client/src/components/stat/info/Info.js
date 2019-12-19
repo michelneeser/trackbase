@@ -12,7 +12,7 @@ class Info extends React.Component {
         <Name statId={this.props.statId} name={this.props.statName} setName={this.props.setName} />
         <div className="mt-2">
           <strong>URL: </strong>
-          <span>{window.location.href}</span>
+          <span>{this.props.statUrl}</span>
           <StyledBadge className="badge badge-warning ml-2">copy</StyledBadge>
         </div>
         <div className="mt-2">

@@ -31,52 +31,35 @@ class Stat extends React.Component {
     }
   }
 
-  loadStatData = (isRefresh) => {
-    const statId = this.props.match.params.statId;
-    axios.get(`/api/stats/${statId}`)
-      .then(res => {
-        const stat = res.data;
-        this.loading = false; // TODO better solution with async/await?
-        this.setState(state => ({
-          stat,
-          refresh: false,
-          updatedValues: (isRefresh ? stat.values.length - state.stat.values.length : -1)
-        }));
-      })
-      .catch(err => {
-        // TODO redirect to 404
-        console.error(err);
-        this.setState({ refresh: false });
-      });
+  loadStatData = async (isRefresh) => {
+    try {
+      const statId = this.props.match.params.statId;
+      const stat = (await axios.get(`/api/stats/${statId}`)).data;
+      stat.values = (await axios.get(stat.valuesUrl)).data;
+      this.loading = false;
+      this.setState(state => ({
+        stat,
+        refresh: false,
+        updatedValues: (isRefresh ? stat.values.data.length - state.stat.values.data.length : -1)
+      }));
+    } catch (error) {
+      console.error(error);
+      this.setState({ refresh: false });
+    }
   }
 
   refresh = () => {
     this.setState({ refresh: true });
   }
 
-  addValue = (value) => {
+  setValues = (values) => {
     this.setState(state => {
       const stat = state.stat;
       return {
-        stat: {
-          ...stat,
-          values: [value, ...stat.values]
-        }
+        stat: { ...stat, values }
       }
     });
-  };
-
-  deleteValue = (valueId) => {
-    this.setState(state => {
-      const stat = state.stat;
-      return {
-        stat: {
-          ...stat,
-          values: stat.values.filter(value => value.valueId !== valueId)
-        }
-      }
-    });
-  };
+  }
 
   setName = (name) => {
     this.setState(state => (
@@ -110,23 +93,29 @@ class Stat extends React.Component {
           <Subtitle text="This is your very own stats page - enjoy!" />
           <Info
             statId={stat.statId}
+            statUrl={stat.url}
             statName={stat.name}
             setName={this.setName}
             statCreated={stat.created} />
 
           <Controls
             statId={stat.statId}
+            valuesUrl={stat.valuesUrl}
             refreshStat={this.refresh}
-            addValue={this.addValue} />
+            setValues={this.setValues} />
 
-          <hr className="my-5" />
-          <Chart values={stat.values} />
+          {stat.values.numeric ? (
+            <div>
+              <hr className="my-5" />
+              <Chart values={stat.values.data} />
+            </div>
+          ) : ''}
 
           <hr className="my-5" />
           <ValueList
-            statId={stat.statId}
-            values={stat.values}
-            deleteValue={this.deleteValue} />
+            valuesUrl={stat.valuesUrl}
+            values={stat.values.data}
+            setValues={this.setValues} />
 
           <div className="row mt-5">
             <div className="col">
@@ -135,7 +124,7 @@ class Stat extends React.Component {
           </div>
 
           <Notification text={updateHintText} onDismiss={() => this.setState({ updatedValues: -1 })} />
-        </div >
+        </div>
       );
     }
 

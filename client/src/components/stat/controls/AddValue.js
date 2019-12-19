@@ -11,6 +11,7 @@ class AddValue extends React.Component {
       valueToAdd: '',
       success: false
     }
+    this.inputField = React.createRef();
   }
 
   componentDidUpdate = (prevProps) => {
@@ -23,15 +24,21 @@ class AddValue extends React.Component {
     this.setState({ valueToAdd: event.target.value });
   }
 
-  addValue = (event) => {
-    event.preventDefault();
-    const value = this.state.valueToAdd;
-    axios.post(`/api/stats/${this.props.statId}/values`, { value })
-      .then(res => {
-        this.props.addValue(res.data[0]);
+  addValue = async (event) => {
+    try {
+      event.preventDefault();
+      const valueToAdd = this.state.valueToAdd;
+      if (!valueToAdd) {
+        this.inputField.current.classList.add('is-invalid');
+      } else {
+        const values = (await axios.post(this.props.valuesUrl, { value: valueToAdd })).data;
+        this.props.setValues(values);
         this.setState({ valueToAdd: '', success: true });
-      })
-      .catch(err => console.error(err));
+        this.inputField.current.classList.remove('is-invalid');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   render() {
@@ -39,7 +46,7 @@ class AddValue extends React.Component {
 
     return (
       <div>
-        <form className="form mt-4" onSubmit={this.addValue}>
+        <form className="form mt-4" onSubmit={this.addValue} noValidate>
           <div className="row">
             <div className="col-5">
               <input type="text" className="form-control" placeholder="enter date" aria-describedby="addValue" />
@@ -47,7 +54,12 @@ class AddValue extends React.Component {
             <div className="col-5">
               <input type="text" className="form-control" placeholder="enter value" aria-describedby="addValue"
                 value={this.state.valueToAdd}
-                onChange={this.handleAddValueChange} />
+                onChange={this.handleAddValueChange}
+                ref={this.inputField}
+                required />
+              <div className="invalid-feedback">
+                Please enter a value to add.
+              </div>
             </div>
             <div className="col-2">
               <button type="submit" className="btn btn-dark btn-block">

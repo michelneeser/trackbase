@@ -4,11 +4,14 @@ import moment from 'moment';
 import Octicon, { Thumbsdown } from '@primer/octicons-react';
 
 class Values extends React.Component {
-  deleteValue = (event) => {
-    const valueId = event.target.closest('.row').getAttribute('valueid');
-    axios.delete(`/api/stats/${this.props.statId}/values/${valueId}`)
-      .then(() => this.props.deleteValue(valueId))
-      .catch(err => console.error(err));
+  deleteValue = async (event) => {
+    try {
+      const valueId = event.target.closest('.row').getAttribute('valueid');
+      const values = (await axios.delete(`${this.props.valuesUrl}/${valueId}`)).data;
+      this.props.setValues(values);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   render() {

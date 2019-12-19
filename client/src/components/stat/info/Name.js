@@ -18,6 +18,12 @@ class NameModal extends React.Component {
     }
   }
 
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.statId !== this.props.statId) {
+      this.setState({ value: '' });
+    }
+  }
+
   toggleModal = () => {
     this.setState(state => ({ show: !state.show }));
   }

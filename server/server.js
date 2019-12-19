@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const config = require('config');
 
@@ -14,6 +15,8 @@ mongoose.connect(db, {
 })
   .then(() => console.log("connected to MongoDB"))
   .catch(err => console.log(err));
+
+app.use(cors());
 
 // set up routes
 app.use('/api/stats', require('./routes/api/stats'));

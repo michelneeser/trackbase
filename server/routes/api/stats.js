@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const stats = await Stat.find();
-    res.json(stats);
+    res.send(stats.map(stat => transformStat(req, stat)));
   } catch (error) {
     setUnknownError(res, 'Error while getting all stats');
   }
@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const stat = await new Stat().save();
-    res.json(stat);
+    res.send(transformStat(req, stat));
   } catch (error) {
     setUnknownError(res, 'Error while creating new stat');
   }
@@ -34,7 +34,7 @@ router.get('/:statId', async (req, res) => {
   try {
     const statId = req.params.statId;
     const stat = await getStat(statId);
-    res.json(stat);
+    res.send(transformStat(req, stat));
   } catch (error) {
     setStatNotFound(res);
   }
@@ -47,8 +47,9 @@ router.get('/:statId/values', async (req, res) => {
   try {
     const statId = req.params.statId;
     const values = await getStatValues(statId);
-    res.json(values);
+    res.send(transformStatValues(req, statId, values));
   } catch (error) {
+    console.log(error);
     setStatNotFound(res);
   }
 });
@@ -67,14 +68,12 @@ router.post('/:statId/values', async (req, res) => {
 
   try {
     let stat = await getStat(statId);
-    stat.values = [
-      {
-        value: payload.value
-      },
-      ...stat.values
+    stat.values.data = [
+      { value: payload.value },
+      ...stat.values.data
     ];
     stat = await stat.save();
-    res.json(stat);
+    res.send(transformStatValues(req, statId, stat.values));
   } catch (error) {
     setStatNotFound(res);
   }
@@ -87,15 +86,21 @@ router.delete('/:statId/values/:valueId', async (req, res) => {
   try {
     const { statId, valueId } = req.params;
     let stat = await getStat(statId);
-    const nrOfValuesBefore = stat.values.length;
-    stat.values = stat.values.filter(value => value.valueId != valueId);
-    if (stat.values.length === nrOfValuesBefore) {
+    let data = stat.values.data;
+    const nrOfValuesBefore = data.length;
+    data = data.filter(value => value.valueId !== valueId);
+
+    if (data.length !== nrOfValuesBefore) {
+      stat.values.data = data;
+    } else {
       setValueNotFound(res);
       return;
     }
+
     stat = await stat.save();
-    res.json(transformStatValues(stat.values));
+    res.send(transformStatValues(req, statId, stat.values));
   } catch (error) {
+    console.log(error);
     setStatNotFound(res);
   }
 });
@@ -134,13 +139,32 @@ getStat = async (statId) => {
 }
 
 getStatValues = async (statId) => {
-  const valuesObj = await Stat.findOne({ statId }, 'values');
-  if (!valuesObj) throw Error();
-  return transformStatValues(valuesObj.values);
+  const values = await Stat.findOne({ statId }, 'values');
+  if (!values) throw Error();
+  return values.values;
 }
 
-transformStatValues = values => {
-  return values.toObject({ transform: (doc, ret) => { delete ret._id } });
+transformStat = (req, stat) => {
+  let statObj = stat.toObject();
+  delete statObj.values;
+  statObj.url = `${getStatsPath(req)}/${statObj.statId}`;
+  statObj.valuesUrl = `${getStatsPath(req)}/${statObj.statId}/values`;
+  return statObj;
+}
+
+transformStatValues = (req, statId, values) => {
+  let valuesObj = values.toObject();
+  valuesObj.data.forEach(value => {
+    delete value._id;
+    value.url = `${getStatsPath(req)}/${statId}/values/${value.valueId}`;
+  });
+  valuesObj.numeric = (valuesObj.data.findIndex(value => isNaN(value.value)) === -1);
+  valuesObj.statUrl = `${getStatsPath(req)}/${statId}`;
+  return valuesObj;
+}
+
+getStatsPath = req => {
+  return req.protocol + "://" + req.get('host') + "/api/stats";
 }
 
 // Error setting function
