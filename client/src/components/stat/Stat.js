@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import config from 'react-global-configuration';
 
 import Title from '../common/Title';
 import Subtitle from '../common/Subtitle';
@@ -7,6 +8,7 @@ import Info from './info/Info';
 import Controls from './controls/Controls';
 import Chart from './values/Chart';
 import ValueList from './values/ValueList';
+import Delete from './controls/Delete';
 import Notification from './Notification';
 
 class Stat extends React.Component {
@@ -34,7 +36,7 @@ class Stat extends React.Component {
   loadStatData = async (isRefresh) => {
     try {
       const statId = this.props.match.params.statId;
-      const stat = (await axios.get(`/api/stats/${statId}`)).data;
+      const stat = (await axios.get(`${config.get('apiBaseUrl')}/${statId}`)).data;
       stat.values = (await axios.get(stat.valuesUrl)).data;
       this.loading = false;
       this.setState(state => ({
@@ -117,11 +119,7 @@ class Stat extends React.Component {
             values={stat.values.data}
             setValues={this.setValues} />
 
-          <div className="row mt-5">
-            <div className="col">
-              <button type="button" className="btn btn-danger btn-block">delete stat</button>
-            </div>
-          </div>
+          <Delete statUrl={stat.url} />
 
           <Notification text={updateHintText} onDismiss={() => this.setState({ updatedValues: -1 })} />
         </div>

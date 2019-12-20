@@ -40,6 +40,20 @@ router.get('/:statId', async (req, res) => {
   }
 });
 
+// @route    DELETE /api/stats/:statId
+// @desc     returns a single stat
+// @access   public
+router.delete('/:statId', async (req, res) => {
+  try {
+    const statId = req.params.statId;
+    await Stat.deleteOne({ statId });
+    res.send({ msg: `stat with id '${statId}' deleted` });
+  } catch (error) {
+    console.log(error);
+    setStatNotFound(res);
+  }
+});
+
 // @route    GET /api/stats/:statId/values
 // @desc     returns the values of a single stat
 // @access   public
@@ -105,7 +119,7 @@ router.delete('/:statId/values/:valueId', async (req, res) => {
   }
 });
 
-// @route    POST /api/stats/:statId/name
+// @route    PUT /api/stats/:statId/name
 // @desc     updates the name of a stat
 // @access   public
 router.put('/:statId/name', async (req, res) => {
@@ -121,7 +135,7 @@ router.put('/:statId/name', async (req, res) => {
     let stat = await getStat(statId);
     stat.name = payload.value;
     stat = await stat.save();
-    res.json(stat);
+    res.send(stat);
   } catch (error) {
     setStatNotFound(res);
   }
@@ -147,8 +161,8 @@ getStatValues = async (statId) => {
 transformStat = (req, stat) => {
   let statObj = stat.toObject();
   delete statObj.values;
-  statObj.url = `${getStatsPath(req)}/${statObj.statId}`;
-  statObj.valuesUrl = `${getStatsPath(req)}/${statObj.statId}/values`;
+  statObj.url = `${getBaseUrl(req)}/${statObj.statId}`;
+  statObj.valuesUrl = `${getBaseUrl(req)}/${statObj.statId}/values`;
   return statObj;
 }
 
@@ -156,29 +170,29 @@ transformStatValues = (req, statId, values) => {
   let valuesObj = values.toObject();
   valuesObj.data.forEach(value => {
     delete value._id;
-    value.url = `${getStatsPath(req)}/${statId}/values/${value.valueId}`;
+    value.url = `${getBaseUrl(req)}/${statId}/values/${value.valueId}`;
   });
   valuesObj.numeric = (valuesObj.data.findIndex(value => isNaN(value.value)) === -1);
-  valuesObj.statUrl = `${getStatsPath(req)}/${statId}`;
+  valuesObj.statUrl = `${getBaseUrl(req)}/${statId}`;
   return valuesObj;
 }
 
-getStatsPath = req => {
+getBaseUrl = req => {
   return req.protocol + "://" + req.get('host') + "/api/stats";
 }
 
 // Error setting function
 // TODO https://expressjs.com/en/guide/error-handling.html
 setInvalidPayload = (res) => {
-  res.status(400).json({ msg: 'Invalid payload' });
+  res.status(400).json({ msg: 'invalid payload' });
 }
 
 setStatNotFound = (res) => {
-  res.status(404).json({ msg: 'Stat not found' });
+  res.status(404).json({ msg: 'stat not found' });
 }
 
 setValueNotFound = (res) => {
-  res.status(404).json({ msg: 'Value not found' });
+  res.status(404).json({ msg: 'value not found' });
 }
 
 setUnknownError = (res, msg) => {

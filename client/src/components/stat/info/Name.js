@@ -3,43 +3,44 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Modal from 'react-bootstrap/Modal';
 
-class NameModal extends React.Component {
+class Name extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-      value: ''
+      showModal: false,
+      modalValue: ''
     }
   }
 
   componentDidMount = () => {
     if (this.props.name) {
-      this.setState({ value: this.props.name });
+      this.setState({ modalValue: this.props.name });
     }
   }
 
   componentDidUpdate = (prevProps) => {
     if (prevProps.statId !== this.props.statId) {
-      this.setState({ value: '' });
+      this.setState({ modalValue: '' });
     }
   }
 
   toggleModal = () => {
-    this.setState(state => ({ show: !state.show }));
+    this.setState(state => ({ showModal: !state.showModal }));
   }
 
   handleModalValueChange = (event) => {
-    this.setState({ value: event.target.value });
+    this.setState({ modalValue: event.target.value });
   }
 
-  save = (event) => {
-    event.preventDefault();
-    axios.put(`/api/stats/${this.props.statId}/name`, { value: this.state.value })
-      .then(() => {
-        this.props.setName(this.state.value);
-        this.toggleModal();
-      })
-      .catch(err => console.error(err));
+  save = async (event) => {
+    try {
+      event.preventDefault();
+      const stat = (await axios.put(`${this.props.statUrl}/name`, { value: this.state.modalValue })).data;
+      this.props.setName(stat.name);
+      this.toggleModal();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {
@@ -53,7 +54,7 @@ class NameModal extends React.Component {
           <StyledBadge className="badge badge-warning ml-2" onClick={this.toggleModal}>edit</StyledBadge>
         </div>
 
-        <Modal show={this.state.show} onHide={this.toggleModal} centered>
+        <Modal show={this.state.showModal} onHide={this.toggleModal} centered>
           <Modal.Header closeButton>
             <Modal.Title>Name your stat</Modal.Title>
           </Modal.Header>
@@ -79,4 +80,4 @@ const StyledBadge = styled.span`
   cursor: pointer;
 `;
 
-export default NameModal;
+export default Name;

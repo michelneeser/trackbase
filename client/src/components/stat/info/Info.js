@@ -9,7 +9,7 @@ class Info extends React.Component {
     return (
       <div className="alert alert-warning p-3 mb-5 shadow">
         <h4 className="alert-heading">General Info</h4>
-        <Name statId={this.props.statId} name={this.props.statName} setName={this.props.setName} />
+        <Name statId={this.props.statId} statUrl={this.props.statUrl} name={this.props.statName} setName={this.props.setName} />
         <div className="mt-2">
           <strong>URL: </strong>
           <span>{this.props.statUrl}</span>
