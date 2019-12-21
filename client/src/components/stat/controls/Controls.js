@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Refresh from './Refresh';
 import AddValue from './AddValue';
@@ -12,6 +13,13 @@ class Controls extends React.Component {
       </div>
     );
   }
+}
+
+Controls.propTypes = {
+  statId: PropTypes.string.isRequired,
+  refreshStat: PropTypes.func.isRequired,
+  valuesUrl: PropTypes.string.isRequired,
+  setValues: PropTypes.func.isRequired
 }
 
 export default Controls;

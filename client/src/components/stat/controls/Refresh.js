@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Octicon, { CloudDownload } from '@primer/octicons-react';
 
 class Refresh extends React.Component {
@@ -57,6 +58,11 @@ class Refresh extends React.Component {
       </div>
     )
   }
+}
+
+Refresh.propTypes = {
+  statId: PropTypes.string.isRequired,
+  refreshStat: PropTypes.func.isRequired
 }
 
 export default Refresh;

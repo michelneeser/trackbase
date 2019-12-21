@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 
-class Delete extends Component {
+class Delete extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,6 +44,10 @@ class Delete extends Component {
       </div>
     )
   }
+}
+
+Delete.propTypes = {
+  statUrl: PropTypes.string.isRequired
 }
 
 export default Delete;

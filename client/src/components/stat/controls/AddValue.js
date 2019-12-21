@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import Octicon, { Plus } from '@primer/octicons-react';
 
@@ -73,6 +74,12 @@ class AddValue extends React.Component {
       </div>
     )
   }
+}
+
+AddValue.propTypes = {
+  statId: PropTypes.string.isRequired,
+  valuesUrl: PropTypes.string.isRequired,
+  setValues: PropTypes.func.isRequired
 }
 
 export default AddValue;
