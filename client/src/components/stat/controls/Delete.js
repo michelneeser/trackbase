@@ -12,7 +12,6 @@ class Delete extends Component {
 
   deleteStat = async () => {
     try {
-      // TODO show confirm dialog
       await axios.delete(this.props.statUrl);
       window.location.href = "/"; // TODO find better solution
     } catch (error) {
@@ -26,10 +25,8 @@ class Delete extends Component {
 
   render() {
     return (
-      <div className="row mt-5">
-        <div className="col">
-          <button type="button" className="btn btn-danger btn-block" onClick={this.toggleModal}>delete stat</button>
-        </div>
+      <div className="mt-5">
+        <button type="button" className="btn btn-danger btn-block" onClick={this.toggleModal}>delete stat</button>
 
         <Modal show={this.state.showModal} onHide={this.toggleModal} centered>
           <Modal.Header closeButton>
@@ -43,7 +40,7 @@ class Delete extends Component {
             </Modal.Footer>
           </Modal.Body>
         </Modal>
-      </div >
+      </div>
     )
   }
 }

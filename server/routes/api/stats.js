@@ -41,7 +41,7 @@ router.get('/:statId', async (req, res) => {
 });
 
 // @route    DELETE /api/stats/:statId
-// @desc     returns a single stat
+// @desc     deletes a single stat
 // @access   public
 router.delete('/:statId', async (req, res) => {
   try {
@@ -49,7 +49,6 @@ router.delete('/:statId', async (req, res) => {
     await Stat.deleteOne({ statId });
     res.send({ msg: `stat with id '${statId}' deleted` });
   } catch (error) {
-    console.log(error);
     setStatNotFound(res);
   }
 });
@@ -135,7 +134,7 @@ router.put('/:statId/name', async (req, res) => {
     let stat = await getStat(statId);
     stat.name = payload.value;
     stat = await stat.save();
-    res.send(stat);
+    res.send(transformStat(req, stat));
   } catch (error) {
     setStatNotFound(res);
   }

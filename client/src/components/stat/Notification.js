@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import Toast from 'react-bootstrap/Toast';
 
 class Notification extends React.Component {
-  timerId = -1;
-
   constructor(props) {
     super(props);
     this.state = {
