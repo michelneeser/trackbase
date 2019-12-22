@@ -1,13 +1,23 @@
 import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import Octicon, { Thumbsdown } from '@primer/octicons-react';
+import Octicon, { Trashcan, Reply, Thumbsdown } from '@primer/octicons-react';
 
 class Values extends React.Component {
   deleteValue = async (event) => {
     try {
       const valueId = event.target.closest('.row').getAttribute('valueid');
       const values = (await axios.delete(`${this.props.valuesUrl}/${valueId}`)).data;
+      this.props.setValues(values);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  repeatValue = async (event) => {
+    try {
+      const value = event.target.closest('.row').querySelector('.value').textContent;
+      const values = (await axios.post(this.props.valuesUrl, { value })).data;
       this.props.setValues(values);
     } catch (error) {
       console.error(error);
@@ -24,11 +34,18 @@ class Values extends React.Component {
           <div className="col-md-4 my-auto">
             {moment(value.created).format('MM/DD/YYYY, hh:mm:ss a')}
           </div>
-          <div className="col-md-7 my-auto">
+          <div className="col-md-6 my-auto value">
             {value.value}
           </div>
           <div className="col-md-1 my-auto">
-            <button type="button" className="btn btn-danger" onClick={this.deleteValue}>X</button>
+            <button type="button" className="btn btn-danger" onClick={this.deleteValue}>
+              <Octicon icon={Trashcan} size="small" />
+            </button>
+          </div>
+          <div className="col-md-1 my-auto">
+            <button type="button" className="btn btn-dark" onClick={this.repeatValue}>
+              <Octicon icon={Reply} size="small" />
+            </button>
           </div>
         </div>
       ));
