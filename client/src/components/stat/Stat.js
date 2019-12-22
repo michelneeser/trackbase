@@ -6,7 +6,7 @@ import Title from '../common/Title';
 import Subtitle from '../common/Subtitle';
 import Info from './info/Info';
 import Controls from './controls/Controls';
-import Chart from './values/Chart';
+import Chart from './values/charts/Chart';
 import ValueList from './values/ValueList';
 import Delete from './controls/Delete';
 import Notification from './Notification';
@@ -106,12 +106,9 @@ class Stat extends React.Component {
             refreshStat={this.refresh}
             setValues={this.setValues} />
 
-          {stat.values.numeric ? (
-            <div>
-              <hr className="my-5" />
-              <Chart values={stat.values.data} />
-            </div>
-          ) : ''}
+          <Chart
+            values={stat.values.data}
+            numeric={stat.values.numeric} />
 
           <hr className="my-5" />
           <ValueList
