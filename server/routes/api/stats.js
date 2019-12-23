@@ -160,8 +160,9 @@ getStatValues = async (statId) => {
 transformStat = (req, stat) => {
   let statObj = stat.toObject();
   delete statObj.values;
-  statObj.url = `${getBaseUrl(req)}/${statObj.statId}`;
-  statObj.valuesUrl = `${getBaseUrl(req)}/${statObj.statId}/values`;
+  statObj.url = `${getAPIBaseUrl(req)}/${statObj.statId}`;
+  statObj.uiUrl = `${getUIBaseUrl(req)}/${statObj.statId}`;
+  statObj.valuesUrl = `${getAPIBaseUrl(req)}/${statObj.statId}/values`;
   return statObj;
 }
 
@@ -169,15 +170,19 @@ transformStatValues = (req, statId, values) => {
   let valuesObj = values.toObject();
   valuesObj.data.forEach(value => {
     delete value._id;
-    value.url = `${getBaseUrl(req)}/${statId}/values/${value.valueId}`;
+    value.url = `${getAPIBaseUrl(req)}/${statId}/values/${value.valueId}`;
   });
   valuesObj.numeric = (valuesObj.data.findIndex(value => isNaN(value.value)) === -1);
-  valuesObj.statUrl = `${getBaseUrl(req)}/${statId}`;
+  valuesObj.statUrl = `${getAPIBaseUrl(req)}/${statId}`;
   return valuesObj;
 }
 
-getBaseUrl = req => {
+getAPIBaseUrl = req => {
   return req.protocol + "://" + req.get('host') + "/api/stats";
+}
+
+getUIBaseUrl = req => {
+  return req.protocol + "://" + req.get('host') + "/stats";
 }
 
 // Error setting function

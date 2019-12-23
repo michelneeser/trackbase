@@ -50,7 +50,7 @@ class Name extends React.Component {
     return (
       <div>
         <div className="mt-3">
-          <strong>Name: </strong>
+          <span className="font-weight-bold">Name: </span>
           <span>{nameToShow}</span>
           <StyledBadge className="badge badge-warning ml-2" onClick={this.toggleModal}>edit</StyledBadge>
         </div>

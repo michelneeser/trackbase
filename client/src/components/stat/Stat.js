@@ -96,6 +96,7 @@ class Stat extends React.Component {
           <Info
             statId={stat.statId}
             statUrl={stat.url}
+            uiUrl={stat.uiUrl}
             statName={stat.name}
             setName={this.setName}
             statCreated={stat.created} />

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
-import { formatPretty } from '../../../utils/timestamp';
 import Name from './Name';
+import Links from './links/Links';
+import { formatPretty } from '../../../utils/timestamp';
 
 class Info extends React.Component {
   render() {
@@ -11,13 +11,9 @@ class Info extends React.Component {
       <div className="alert alert-warning p-3 mb-5 shadow">
         <h4 className="alert-heading">General Info</h4>
         <Name statId={this.props.statId} statUrl={this.props.statUrl} name={this.props.statName} setName={this.props.setName} />
+        <Links publicUrl={this.props.uiUrl} apiUrl={this.props.statUrl} />
         <div className="mt-2">
-          <strong>URL: </strong>
-          <span>{this.props.statUrl}</span>
-          <StyledBadge className="badge badge-warning ml-2">copy</StyledBadge>
-        </div>
-        <div className="mt-2">
-          <strong>Created: </strong>
+          <span className="font-weight-bold">Created: </span>
           <span>{formatPretty(this.props.statCreated)}</span>
         </div>
       </div>
@@ -25,13 +21,10 @@ class Info extends React.Component {
   }
 }
 
-const StyledBadge = styled.span`
-  cursor: pointer;
-`;
-
 Info.propTypes = {
   statId: PropTypes.string.isRequired,
   statUrl: PropTypes.string.isRequired,
+  uiUrl: PropTypes.string.isRequired,
   statName: PropTypes.string.isRequired,
   setName: PropTypes.func.isRequired,
   statCreated: PropTypes.string.isRequired
