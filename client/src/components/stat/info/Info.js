@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Name from './Name';
 import Links from './links/Links';
-import { formatPretty } from '../../../utils/timestamp';
+import Timestamp from '../Timestamp'
 
 class Info extends React.Component {
   render() {
@@ -14,7 +14,7 @@ class Info extends React.Component {
         <Links publicUrl={this.props.uiUrl} apiUrl={this.props.statUrl} />
         <div className="mt-2">
           <span className="font-weight-bold">Created: </span>
-          <span>{formatPretty(this.props.statCreated)}</span>
+          <Timestamp date={this.props.statCreated} />
         </div>
       </div>
     )

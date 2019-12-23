@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Octicon, { Trashcan, Reply, Thumbsdown } from '@primer/octicons-react';
 
-import { formatPretty } from '../../../utils/timestamp';
+import Timestamp from '../../stat/Timestamp';
 
 class Values extends React.Component {
   deleteValue = async (event) => {
@@ -33,7 +33,7 @@ class Values extends React.Component {
       valuesToRender = values.map(value => (
         <div key={value.valueId} valueid={value.valueId} className="row border shadow-sm p-3 mb-3">
           <div className="col-md-4 my-auto">
-            {formatPretty(value.created)}
+            <Timestamp date={value.created} />
           </div>
           <div className="col-md-6 my-auto value">
             {value.value}
