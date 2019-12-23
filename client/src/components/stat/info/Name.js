@@ -11,6 +11,7 @@ class Name extends React.Component {
       showModal: false,
       modalValue: ''
     }
+    this.inputField = React.createRef();
   }
 
   componentDidMount = () => {
@@ -19,9 +20,12 @@ class Name extends React.Component {
     }
   }
 
-  componentDidUpdate = (prevProps) => {
+  componentDidUpdate = (prevProps, prevState) => {
     if (prevProps.statId !== this.props.statId) {
-      this.setState({ modalValue: '' });
+      this.setState({ modalValue: this.props.name });
+    }
+    if (!prevState.showModal && this.inputField.current) {
+      this.inputField.current.select();
     }
   }
 
@@ -64,7 +68,7 @@ class Name extends React.Component {
               <div className="form-group">
                 <p className="text-muted">Give your stat a nice name to identify it in the future</p>
                 <input type="text" className="form-control" name="name" placeholder="Name"
-                  value={this.state.value} onChange={this.handleModalValueChange} />
+                  value={this.state.modalValue} onChange={this.handleModalValueChange} ref={this.inputField} />
               </div>
               <Modal.Footer className="mt-3">
                 <button type="submit" className="btn btn-dark">Save</button>

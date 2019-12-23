@@ -37,7 +37,7 @@ class Refresh extends React.Component {
             <div className="col-10">
               <div className="input-group">
                 <div className="input-group-prepend">
-                  <span className="input-group-text">AUTO REFRESH INTERVAL</span>
+                  <span className="input-group-text">AUTO REFRESH</span>
                 </div>
                 <select className="form-control" value={this.state.refreshInterval} onChange={this.handleIntervalChange}>
                   <option value="req">only on request</option>

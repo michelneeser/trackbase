@@ -5,10 +5,10 @@ import { Line } from 'react-chartjs-2';
 
 class LineChart extends Component {
   render() {
-    const values = this.props.values;
+    const values = this.props.values.slice().reverse();
 
     // chart data
-    const chartLabels = values.map(val => moment(val.created).format('L LTS'));
+    const chartLabels = values.map(val => moment(val.timestamp).format('L LTS'));
     const chartValues = values.map(val => val.value);
 
     const chartData = {

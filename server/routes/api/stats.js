@@ -72,9 +72,9 @@ router.get('/:statId/values', async (req, res) => {
 // @access   public
 router.post('/:statId/values', async (req, res) => {
   const statId = req.params.statId;
-  const payload = req.body;
+  let { value, timestamp } = req.body;
 
-  if (!payload.value) {
+  if (!value) {
     setInvalidPayload(res);
     return;
   }
@@ -82,7 +82,7 @@ router.post('/:statId/values', async (req, res) => {
   try {
     let stat = await getStat(statId);
     stat.values.data = [
-      { value: payload.value },
+      { value, timestamp },
       ...stat.values.data
     ];
     stat = await stat.save();
@@ -172,6 +172,14 @@ transformStatValues = (req, statId, values) => {
     delete value._id;
     value.url = `${getAPIBaseUrl(req)}/${statId}/values/${value.valueId}`;
   });
+
+  function timestampComparator(value1, value2) {
+    if (value1.timestamp < value2.timestamp) return 1;
+    if (value1.timestamp > value2.timestamp) return -1;
+    return 0;
+  }
+  valuesObj.data.sort(timestampComparator);
+
   valuesObj.numeric = (valuesObj.data.findIndex(value => isNaN(value.value)) === -1);
   valuesObj.statUrl = `${getAPIBaseUrl(req)}/${statId}`;
   return valuesObj;

@@ -27,6 +27,7 @@ const statSchema = new mongoose.Schema({
       {
         valueId: { type: String, default: generateId },
         value: String,
+        timestamp: { type: Date, default: Date.now },
         created: { type: Date, default: Date.now }
       }
     ]
