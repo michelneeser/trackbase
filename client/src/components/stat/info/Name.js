@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Modal from 'react-bootstrap/Modal';
 
@@ -79,5 +80,12 @@ class Name extends React.Component {
 const StyledBadge = styled.span`
   cursor: pointer;
 `;
+
+Name.propTypes = {
+  statId: PropTypes.string.isRequired,
+  statUrl: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  setName: PropTypes.func.isRequired
+}
 
 export default Name;

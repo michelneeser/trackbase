@@ -1,7 +1,8 @@
 import React from 'react';
-import moment from 'moment';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { formatPretty } from '../../../utils/timestamp';
 import Name from './Name';
 
 class Info extends React.Component {
@@ -17,7 +18,7 @@ class Info extends React.Component {
         </div>
         <div className="mt-2">
           <strong>Created: </strong>
-          <span>{moment(this.props.statCreated).format('MMMM Do YYYY, hh:mm:ss a')}</span>
+          <span>{formatPretty(this.props.statCreated)}</span>
         </div>
       </div>
     )
@@ -27,5 +28,13 @@ class Info extends React.Component {
 const StyledBadge = styled.span`
   cursor: pointer;
 `;
+
+Info.propTypes = {
+  statId: PropTypes.string.isRequired,
+  statUrl: PropTypes.string.isRequired,
+  statName: PropTypes.string.isRequired,
+  setName: PropTypes.func.isRequired,
+  statCreated: PropTypes.string.isRequired
+}
 
 export default Info;

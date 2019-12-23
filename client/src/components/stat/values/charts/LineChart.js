@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { Line } from 'react-chartjs-2';
+
+import { format } from '../../../../utils/timestamp';
 
 class LineChart extends Component {
   render() {
     const values = this.props.values;
 
     // chart data
-    const chartLabels = values.map(val => moment(val.created).format('MM/DD/YYYY, hh:mm:ss a'));
+    const chartLabels = values.map(val => format(val.created));
     const chartValues = values.map(val => val.value);
 
     const chartData = {

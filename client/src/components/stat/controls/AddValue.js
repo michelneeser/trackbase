@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import Datetime from 'react-datetime';
+import './Datetime.css';
 import Octicon, { Plus } from '@primer/octicons-react';
 
 import Notification from '../Notification';
@@ -42,6 +44,10 @@ class AddValue extends React.Component {
     }
   }
 
+  handleDateChange = (moment) => {
+    console.log(moment);
+  }
+
   render() {
     const notificationText = (this.state.success ? 'Value successfully added' : '');
 
@@ -50,7 +56,7 @@ class AddValue extends React.Component {
         <form className="form mt-4" onSubmit={this.addValue} noValidate>
           <div className="row">
             <div className="col-5">
-              <input type="text" className="form-control" placeholder="enter date" aria-describedby="enterDate" />
+              <Datetime onChange={this.handleDateChange} />
             </div>
             <div className="col-5">
               <input type="text" className="form-control" placeholder="enter value" aria-describedby="enterValue"
