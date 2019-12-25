@@ -26,10 +26,9 @@ class Config extends React.Component {
 
   handleShowChartChange = async (event) => {
     try {
-      const showChart = event.target.checked;
-      await axios.put(this.props.statUrl, { withChart: showChart });
-      this.props.setWithChart(showChart);
-      this.setState({ showChart });
+      const stat = (await axios.put(this.props.statUrl, { withChart: event.target.checked })).data;
+      this.props.setWithChart(stat.withChart);
+      this.setState({ showChart: stat.withChart });
     } catch (error) {
       console.error(error);
     }
@@ -50,25 +49,21 @@ class Config extends React.Component {
       <div>
         <form className="form p-3 border shadow-sm">
           <div className="row">
-            <div className="col-2">
-              <div className="mt-2 ml-4">
-                <div className="custom-control custom-switch">
-                  <input type="checkbox" className="custom-control-input" id="showChartToggle"
-                    checked={this.state.showChart}
-                    onChange={this.handleShowChartChange} />
-                  <label className="custom-control-label" htmlFor="showChartToggle">show chart</label>
-                </div>
+            <div className="col-xl-2 pl-4 mt-2">
+              <div className="custom-control custom-switch">
+                <input type="checkbox" className="custom-control-input" id="showChartToggle"
+                  checked={this.state.showChart}
+                  onChange={this.handleShowChartChange} />
+                <label className="custom-control-label" htmlFor="showChartToggle">show chart</label>
               </div>
             </div>
-            <div className="col-3">
-              <div className="mt-2 ml-4">
-                <div className="custom-control custom-switch">
-                  <input type="checkbox" className="custom-control-input" id="showTimestampsToggle" />
-                  <label className="custom-control-label" htmlFor="showTimestampsToggle">show timestamps</label>
-                </div>
+            <div className="col-xl-3 pl-4 mt-4 mt-xl-2">
+              <div className="custom-control custom-switch">
+                <input type="checkbox" className="custom-control-input" id="showTimestampsToggle" />
+                <label className="custom-control-label" htmlFor="showTimestampsToggle">show timestamps</label>
               </div>
             </div>
-            <div className="col-5">
+            <div className="col-xl-5 mt-4 mt-xl-0">
               <div className="input-group">
                 <div className="input-group-prepend">
                   <span className="input-group-text">AUTO REFRESH</span>
@@ -82,7 +77,7 @@ class Config extends React.Component {
                 </select>
               </div>
             </div>
-            <div className="col-2">
+            <div className="col-xl-2 mt-4 mt-xl-0">
               <button type="button" className="btn btn-dark btn-block" onClick={this.props.refreshStat}>
                 <Octicon icon={CloudDownload} size="small" />
               </button>

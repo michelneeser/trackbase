@@ -31,20 +31,23 @@ class Values extends React.Component {
 
     if (values.length > 0) {
       valuesToRender = values.map(value => (
-        <div key={value.valueId} valueid={value.valueId} className="row border shadow-sm p-3 mb-3">
-          <div className="col-md-4 my-auto">
+        <div key={value.valueId} valueid={value.valueId} className="row border shadow-sm p-3 mb-3 mx-2 mx-xl-0">
+          <div className="col-xl-4 my-auto d-none d-xl-block">
             <Timestamp timestamp={value.timestamp} />
           </div>
-          <div className="col-md-6 my-auto value">
+          <div className="col-xl-6 mt-4 mt-xl-0 my-xl-auto d-none d-xl-block value">
             {value.value}
           </div>
-          <div className="col-md-1 my-auto">
-            <button type="button" className="btn btn-danger" onClick={this.deleteValue}>
+          <div className="col-xl-6 mt-4 mt-xl-0 my-xl-auto d-xl-none">
+            {value.value} (<Timestamp timestamp={value.timestamp} />)
+          </div>
+          <div className="col-xl-1 mt-4 mt-xl-0">
+            <button type="button" className="btn btn-danger btn-block" onClick={this.deleteValue}>
               <Octicon icon={Trashcan} size="small" />
             </button>
           </div>
-          <div className="col-md-1 my-auto">
-            <button type="button" className="btn btn-dark" onClick={this.repeatValue}>
+          <div className="col-xl-1 mt-4 mt-xl-0">
+            <button type="button" className="btn btn-dark btn-block" onClick={this.repeatValue}>
               <Octicon icon={Reply} size="small" />
             </button>
           </div>
@@ -52,7 +55,7 @@ class Values extends React.Component {
       ));
     } else {
       valuesToRender = (
-        <div className="row border shadow-sm p-3 mb-3 text-center">
+        <div className="row border shadow-sm p-3 mb-3 mx-2 mx-xl-0 text-center">
           <div className="col my-5">
             <Octicon icon={Thumbsdown} size="medium" />
             <p className="mt-4">no values yet</p>

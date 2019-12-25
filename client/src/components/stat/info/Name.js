@@ -40,7 +40,7 @@ class Name extends React.Component {
   save = async (event) => {
     try {
       event.preventDefault();
-      const stat = (await axios.put(`${this.props.statUrl}/name`, { value: this.state.modalValue })).data;
+      const stat = (await axios.put(this.props.statUrl, { name: this.state.modalValue })).data;
       this.props.setName(stat.name);
       this.toggleModal();
     } catch (error) {

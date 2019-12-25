@@ -91,7 +91,7 @@ class AddValue extends React.Component {
       <div>
         <form className="form mt-4 p-3 border shadow-sm" onSubmit={this.addValue} noValidate>
           <div className="row">
-            <div className="col-4">
+            <div className="col-xl-4">
               <Datetime onChange={this.handleTimestampChange} value={this.state.timestamp} timeFormat={datepickerTimeFormat} renderInput={(props) => (
                 <div>
                   <input {...props} ref={this.timestampField} placeholder="enter or choose timestamp" />
@@ -101,12 +101,12 @@ class AddValue extends React.Component {
                 </div>
               )} />
             </div>
-            <div className="col-1">
+            <div className="col-xl-1 mt-4 mt-xl-0">
               <button type="button" className="btn btn-dark btn-block" onClick={this.setTimestampToCurrent}>
                 <Octicon icon={Watch} size="small" />
               </button>
             </div>
-            <div className="col-5">
+            <div className="col-xl-5 mt-4 mt-xl-0">
               <input type="text" className="form-control" placeholder="enter value"
                 value={this.state.value}
                 onChange={this.handleValueChange}
@@ -116,7 +116,7 @@ class AddValue extends React.Component {
                 Please enter a value to add.
               </div>
             </div>
-            <div className="col-2">
+            <div className="col-xl-2 mt-4 mt-xl-0">
               <button type="submit" className="btn btn-dark btn-block">
                 <Octicon icon={Plus} size="small" />
               </button>

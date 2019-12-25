@@ -6,7 +6,7 @@ import Url from './Url';
 class Links extends React.Component {
   render() {
     return (
-      <div>
+      <div className="d-none d-xl-block">
         <Url
           name="Public URL"
           description="Use this URL to publicly show your stat, e.g. for sending to a friend."
