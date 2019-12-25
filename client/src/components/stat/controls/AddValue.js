@@ -23,7 +23,11 @@ class AddValue extends React.Component {
 
   componentDidUpdate = (prevProps) => {
     if (prevProps.statId !== this.props.statId) {
-      this.setState({ value: '' });
+      this.setState({
+        value: '',
+        timestamp: moment(),
+        isTimestampValid: true,
+      });
     }
   }
 
@@ -34,12 +38,16 @@ class AddValue extends React.Component {
 
   handleTimestampChange = (moment) => {
     this.timestampField.current.classList.remove('is-invalid');
+    const stateUpdate = { timestamp: moment };
+
     if (typeof moment === 'object') {
       // entered timestamp is valid
-      this.setState({ timestamp: moment, isTimestampValid: true });
+      stateUpdate.isTimestampValid = true;
     } else {
-      this.setState({ isTimestampValid: moment === '' });
+      // 'moment' is just the input string here
+      stateUpdate.isTimestampValid = (moment === ''); // timestamp is valid if empty
     }
+    this.setState(stateUpdate);
   }
 
   setTimestampToCurrent = () => {
@@ -50,6 +58,7 @@ class AddValue extends React.Component {
     try {
       event.preventDefault();
       const { value, timestamp, isTimestampValid } = this.state;
+
       let valid = true;
       if (!value) {
         this.valueField.current.classList.add('is-invalid');
@@ -61,7 +70,7 @@ class AddValue extends React.Component {
       }
 
       if (valid) {
-        const values = (await axios.post(this.props.valuesUrl, { value, timestamp: timestamp.toISOString() })).data;
+        const values = (await axios.post(this.props.valuesUrl, { value, timestamp })).data;
         this.props.setValues(values);
         this.setState({
           value: '',
@@ -80,12 +89,12 @@ class AddValue extends React.Component {
 
     return (
       <div>
-        <form className="form mt-4" onSubmit={this.addValue} noValidate>
+        <form className="form mt-4 p-3 border shadow-sm" onSubmit={this.addValue} noValidate>
           <div className="row">
             <div className="col-4">
               <Datetime onChange={this.handleTimestampChange} value={this.state.timestamp} timeFormat={datepickerTimeFormat} renderInput={(props) => (
                 <div>
-                  <input {...props} ref={this.timestampField} />
+                  <input {...props} ref={this.timestampField} placeholder="enter or choose timestamp" />
                   <div className="invalid-feedback">
                     Please enter a valid timestamp.
                   </div>
@@ -98,7 +107,7 @@ class AddValue extends React.Component {
               </button>
             </div>
             <div className="col-5">
-              <input type="text" className="form-control" placeholder="enter value" aria-describedby="enterValue"
+              <input type="text" className="form-control" placeholder="enter value"
                 value={this.state.value}
                 onChange={this.handleValueChange}
                 ref={this.valueField}

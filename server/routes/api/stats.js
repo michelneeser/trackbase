@@ -1,5 +1,6 @@
 const express = require('express');
 const Stat = require('../../models/Stat');
+const moment = require('moment');
 
 const router = express.Router();
 
@@ -74,9 +75,13 @@ router.post('/:statId/values', async (req, res) => {
   const statId = req.params.statId;
   let { value, timestamp } = req.body;
 
+  // TODO replace validation and validate timestamp with https://express-validator.github.io
   if (!value) {
     setInvalidPayload(res);
     return;
+  }
+  if (!timestamp) {
+    timestamp = moment();
   }
 
   try {
@@ -119,20 +124,23 @@ router.delete('/:statId/values/:valueId', async (req, res) => {
 });
 
 // @route    PUT /api/stats/:statId/name
-// @desc     updates the name of a stat
+// @desc     updates a single stat (currently, properties 'name' and 'withChart' can be updated)
 // @access   public
-router.put('/:statId/name', async (req, res) => {
+router.put('/:statId', async (req, res) => {
   const statId = req.params.statId;
-  const payload = req.body;
+  const { name, withChart } = req.body;
 
-  if (!payload.value) {
+  // TODO replace validation with https://express-validator.github.io
+  if (!name && typeof withChart !== 'boolean') {
     setInvalidPayload(res);
     return;
   }
 
   try {
     let stat = await getStat(statId);
-    stat.name = payload.value;
+    if (name) stat.name = name;
+    if (typeof withChart === 'boolean') stat.withChart = withChart;
+
     stat = await stat.save();
     res.send(transformStat(req, stat));
   } catch (error) {

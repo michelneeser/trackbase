@@ -14,7 +14,7 @@ class Info extends React.Component {
         <Links publicUrl={this.props.uiUrl} apiUrl={this.props.statUrl} />
         <div className="mt-2">
           <span className="font-weight-bold">Created: </span>
-          <Timestamp date={this.props.statCreated} />
+          <Timestamp timestamp={this.props.statCreated} />
         </div>
       </div>
     )

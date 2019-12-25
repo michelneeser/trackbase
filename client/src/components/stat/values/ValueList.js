@@ -33,7 +33,7 @@ class Values extends React.Component {
       valuesToRender = values.map(value => (
         <div key={value.valueId} valueid={value.valueId} className="row border shadow-sm p-3 mb-3">
           <div className="col-md-4 my-auto">
-            <Timestamp date={value.timestamp} />
+            <Timestamp timestamp={value.timestamp} />
           </div>
           <div className="col-md-6 my-auto value">
             {value.value}

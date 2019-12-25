@@ -69,6 +69,12 @@ class Stat extends React.Component {
     ));
   }
 
+  setWithChart = (withChart) => {
+    this.setState(state => (
+      { stat: { ...state.stat, withChart } }
+    ));
+  }
+
   render() {
     // update hint
     let updateHintText = '';
@@ -103,13 +109,18 @@ class Stat extends React.Component {
 
           <Controls
             statId={stat.statId}
+            statUrl={stat.url}
+            showChart={stat.withChart}
             valuesUrl={stat.valuesUrl}
             refreshStat={this.refresh}
-            setValues={this.setValues} />
+            setValues={this.setValues}
+            setWithChart={this.setWithChart} />
 
-          <Chart
-            values={stat.values.data}
-            numeric={stat.values.numeric} />
+          {stat.withChart ? (
+            <Chart
+              values={stat.values.data}
+              numeric={stat.values.numeric} />
+          ) : ''}
 
           <hr className="my-5" />
           <ValueList

@@ -22,6 +22,10 @@ const statSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  withChart: {
+    type: Boolean,
+    default: true
+  },
   values: {
     data: [
       {

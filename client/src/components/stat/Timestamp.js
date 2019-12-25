@@ -6,26 +6,26 @@ import Tooltip from 'react-bootstrap/Tooltip';
 
 class Timestamp extends React.Component {
   render() {
-    const momentObj = moment(this.props.date);
+    const momentObj = moment(this.props.timestamp);
     const diffToNow = moment().diff(momentObj);
 
-    let shownDate = '';
-    let hiddenDate = '';
+    let shownValue = '';
+    let hiddenValue = '';
 
     if (diffToNow < TWELVE_HOURS_IN_MILLIS) {
-      hiddenDate = momentObj.format('L LTS'); // e.g. '12/23/2019 2:37:49 PM'
-      shownDate = momentObj.locale('en').fromNow(); // e.g. '10 minutes ago'
+      hiddenValue = momentObj.format('L LTS'); // e.g. '12/23/2019 2:37:49 PM'
+      shownValue = momentObj.locale('en').fromNow(); // e.g. '10 minutes ago'
     } else {
-      shownDate = momentObj.format('L LTS'); // e.g. '12/23/2019 2:37:49 PM'
-      hiddenDate = momentObj.locale('en').fromNow(); // e.g. '10 minutes ago'
+      shownValue = momentObj.format('L LTS'); // e.g. '12/23/2019 2:37:49 PM'
+      hiddenValue = momentObj.locale('en').fromNow(); // e.g. '10 minutes ago'
     }
 
     return (
       <OverlayTrigger
         placement="right"
         overlay={props => (
-          <Tooltip {...props} show={props.show.toString()}>{hiddenDate}</Tooltip>)}>
-        <span>{shownDate}</span>
+          <Tooltip {...props} show={props.show.toString()}>{hiddenValue}</Tooltip>)}>
+        <span>{shownValue}</span>
       </OverlayTrigger>
     );
   }
@@ -34,7 +34,7 @@ class Timestamp extends React.Component {
 const TWELVE_HOURS_IN_MILLIS = 43200000;
 
 Timestamp.propTypes = {
-  date: PropTypes.string.isRequired
+  timestamp: PropTypes.string.isRequired
 }
 
 export default Timestamp;
