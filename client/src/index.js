@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './app/App';
 import config from 'react-global-configuration';
 import moment from 'moment';
 import 'moment/locale/de';

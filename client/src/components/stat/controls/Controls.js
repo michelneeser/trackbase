@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Config from './Config';
-import AddValue from './AddValue';
+import AddValue from './add-value/AddValue';
 
 class Controls extends React.Component {
   render() {

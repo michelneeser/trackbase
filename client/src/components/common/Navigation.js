@@ -9,7 +9,7 @@ import createNewStatAndRedirect from '../../utils/history';
 class Navigation extends React.Component {
   render() {
     return (
-      <Navbar bg="dark" variant="dark" expand="md">
+      <Navbar bg="dark" variant="dark" expand="xl">
         <div className="container">
           <Navbar.Brand href="/">uStats</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar-toggle" />

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import moment from 'moment';
 import Datetime from 'react-datetime';
-import './Datetime.css';
 import Octicon, { Watch, Plus } from '@primer/octicons-react';
+import './Datetime.css';
 
-import Notification from '../Notification';
+import Notification from '../../Notification';
 
 class AddValue extends React.Component {
   constructor(props) {

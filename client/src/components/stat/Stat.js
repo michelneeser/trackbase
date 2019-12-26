@@ -6,7 +6,7 @@ import Title from '../common/Title';
 import Subtitle from '../common/Subtitle';
 import Info from './info/Info';
 import Controls from './controls/Controls';
-import Chart from './values/charts/Chart';
+import Chart from './values/chart/Chart';
 import ValueList from './values/ValueList';
 import Delete from './controls/Delete';
 import Notification from './Notification';
