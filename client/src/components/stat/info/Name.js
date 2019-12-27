@@ -49,13 +49,11 @@ class Name extends React.Component {
   }
 
   render() {
-    const nameToShow = (this.props.name ? this.props.name : this.props.statId);
-
     return (
       <div>
         <div className="mt-3">
           <span className="font-weight-bold">Name: </span>
-          <span>{nameToShow}</span>
+          <span>{this.props.name || this.props.statId}</span>
           <StyledBadge className="badge badge-warning ml-2" onClick={this.toggleModal}>edit</StyledBadge>
         </div>
 

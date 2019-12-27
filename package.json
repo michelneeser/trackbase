@@ -4,7 +4,8 @@
   "author": "Michel Neeser",
   "private": true,
   "scripts": {
-    "start": "concurrently 'npm run start-dev --prefix server' 'npm start --prefix client'"
+    "start": "concurrently 'npm run start-dev --prefix server' 'npm start --prefix client'",
+    "mongo": "mongo 'mongodb+srv://ustats-pgwns.mongodb.net/ustats' --username ustats"
   },
   "devDependencies": {
     "concurrently": "^5.0.0"

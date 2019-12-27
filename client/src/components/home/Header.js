@@ -8,7 +8,7 @@ class Header extends React.Component {
   render() {
     return (
       <Background>
-        <Content className="container shadow">
+        <Content className="mx-auto shadow">
           <div>
             <h1 className="text-center text-light">Track everything, everywhere</h1>
             <p className="lead text-center text-light">Log any data you want for free and with just one click.</p>
@@ -45,10 +45,11 @@ const Background = styled.div`
 const Content = styled.div`
   border-radius: 1rem;
   background: rgba(0, 0, 0, 0.4);
-  padding: 2rem 0;
+  padding: 2rem;
+  width: 60rem;
 
-  @media(max-width: 768px) {
-    width: 90% !important;
+  @media(max-width: 1200px) {
+    width: 70%;
     overflow: hidden;
   }
 `;

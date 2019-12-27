@@ -9,7 +9,7 @@ const router = express.Router();
 // @access   public
 router.get('/', async (req, res) => {
   try {
-    const stats = await Stat.find();
+    const stats = await Stat.find().sort({ created: -1 });
     res.send(stats.map(stat => transformStat(req, stat)));
   } catch (error) {
     setUnknownError(res, 'Error while getting all stats');
@@ -198,7 +198,7 @@ getAPIBaseUrl = req => {
 }
 
 getUIBaseUrl = req => {
-  return req.protocol + "://" + req.get('host') + "/stats";
+  return req.protocol + "://localhost:3000/stat"; // TODO get host dynamically
 }
 
 // Error setting function
