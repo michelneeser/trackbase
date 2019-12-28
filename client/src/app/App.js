@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import styled from 'styled-components';
 
 import Navigation from '../components/common/Navigation';
 import Header from '../components/home/Header';
@@ -14,13 +15,13 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div className="app">
+        <StyledApp className="app">
           <Route component={Navigation} />
           <Route
             exact
             path="/"
             component={Header} />
-          <div className="container">
+          <StyledContainer className="container">
             <Route
               exact
               path="/"
@@ -32,12 +33,25 @@ class App extends React.Component {
               exact
               path="/showroom"
               component={Showroom} />
-          </div>
+          </StyledContainer>
           <Route component={Footer} />
-        </div>
+        </StyledApp>
       </Router>
     );
   }
 }
+
+const StyledApp = styled.div`
+  position: relative;
+  min-height: 100vh;
+`;
+
+const StyledContainer = styled.div`
+  padding-bottom: 13rem;
+
+  @media(max-width: 1200px) {
+    padding-bottom: 18rem;
+  }
+`;
 
 export default App;

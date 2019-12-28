@@ -31,9 +31,15 @@ class Footer extends React.Component {
 }
 
 const StyledFooter = styled.footer`
+  position: absolute;
+  width: 100%;
+  bottom: 0;
   font-size: 0.8rem;
-  margin-top: 5rem;
-  min-height: 200px;
+  height: 10rem;
+
+  @media(max-width: 1200px) {
+    height: 15rem;
+  }
 `;
 
 const StyledLink = styled.span`
