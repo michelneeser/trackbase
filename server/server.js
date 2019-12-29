@@ -20,6 +20,7 @@ app.use(cors());
 
 // set up routes
 app.use('/api/stats', require('./routes/api/stats'));
+app.use('/api/collections', require('./routes/api/collections'));
 
 // start server
 const port = process.env.PORT || 5000;

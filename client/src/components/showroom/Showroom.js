@@ -21,7 +21,7 @@ class Showroom extends React.Component {
   }
 
   componentDidMount = async () => {
-    const stats = (await axios.get(config.get('apiBaseUrl'))).data;
+    const stats = (await axios.get(`${config.get('apiBaseUrl')}/stats`)).data;
     this.loading = false;
     this.setState({ stats });
   }

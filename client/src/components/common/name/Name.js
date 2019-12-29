@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Modal from 'react-bootstrap/Modal';
 
-class Description extends React.Component {
+class Name extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,14 +15,14 @@ class Description extends React.Component {
   }
 
   componentDidMount = () => {
-    if (this.props.description) {
-      this.setState({ modalValue: this.props.description });
+    if (this.props.name) {
+      this.setState({ modalValue: this.props.name });
     }
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    if (prevProps.statId !== this.props.statId) {
-      this.setState({ modalValue: this.props.description });
+    if (prevProps.id !== this.props.id) {
+      this.setState({ modalValue: this.props.name });
     }
     if (!prevState.showModal && this.inputField.current) {
       this.inputField.current.select();
@@ -40,8 +40,8 @@ class Description extends React.Component {
   save = async (event) => {
     try {
       event.preventDefault();
-      const stat = (await axios.put(this.props.statUrl, { description: this.state.modalValue })).data;
-      this.props.setStatProperty('description', stat.description);
+      const stat = (await axios.put(this.props.updateUrl, { name: this.state.modalValue })).data;
+      this.props.setProperty('name', stat.name);
       this.toggleModal();
     } catch (error) {
       console.log(error);
@@ -51,21 +51,21 @@ class Description extends React.Component {
   render() {
     return (
       <div>
-        <div className="mt-2">
-          <span className="font-weight-bold">Description: </span>
-          <span>{this.props.description || '(nothing here yet)'}</span>
+        <div className="mt-3">
+          <span className="font-weight-bold">Name: </span>
+          <span>{this.props.name || this.props.id}</span>
           <StyledBadge className="badge badge-warning ml-2" onClick={this.toggleModal}>edit</StyledBadge>
         </div>
 
         <Modal show={this.state.showModal} onHide={this.toggleModal} centered>
           <Modal.Header closeButton>
-            <Modal.Title>Describe your stat</Modal.Title>
+            <Modal.Title>Name your stat</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <form onSubmit={this.save}>
               <div className="form-group">
-                <p className="text-muted">Give your stat a nice description</p>
-                <input type="text" className="form-control" name="description" placeholder="Description" maxLength="100"
+                <p className="text-muted">Give your stat a nice name to identify it in the future</p>
+                <input type="text" className="form-control" name="name" placeholder="Name" maxLength="30"
                   value={this.state.modalValue} onChange={this.handleModalValueChange} ref={this.inputField} />
               </div>
               <Modal.Footer className="mt-3">
@@ -83,10 +83,11 @@ const StyledBadge = styled.span`
   cursor: pointer;
 `;
 
-Description.propTypes = {
-  statUrl: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  setStatProperty: PropTypes.func.isRequired
+Name.propTypes = {
+  id: PropTypes.string.isRequired,
+  updateUrl: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  setProperty: PropTypes.func.isRequired
 }
 
-export default Description;
+export default Name;

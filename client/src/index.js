@@ -6,7 +6,7 @@ import moment from 'moment';
 import 'moment/locale/de';
 
 function initConfig() {
-  config.set({ apiBaseUrl: 'http://localhost:5000/api/stats' });
+  config.set({ apiBaseUrl: 'http://localhost:5000/api' });
 }
 
 function setLocale() {

@@ -172,9 +172,9 @@ getStatValues = async (statId) => {
 transformStat = (req, stat) => {
   let statObj = stat.toObject();
   delete statObj.values;
-  statObj.url = `${getAPIBaseUrl(req)}/${statObj.statId}`;
-  statObj.uiUrl = `${getUIBaseUrl(req)}/${statObj.statId}`;
-  statObj.valuesUrl = `${getAPIBaseUrl(req)}/${statObj.statId}/values`;
+  statObj.url = `${getAPIBaseUrlForStats(req)}/${statObj.statId}`;
+  statObj.uiUrl = `${getUIBaseUrlForStats(req)}/${statObj.statId}`;
+  statObj.valuesUrl = `${getAPIBaseUrlForStats(req)}/${statObj.statId}/values`;
   return statObj;
 }
 
@@ -182,7 +182,7 @@ transformStatValues = (req, statId, values) => {
   let valuesObj = values.toObject();
   valuesObj.data.forEach(value => {
     delete value._id;
-    value.url = `${getAPIBaseUrl(req)}/${statId}/values/${value.valueId}`;
+    value.url = `${getAPIBaseUrlForStats(req)}/${statId}/values/${value.valueId}`;
   });
 
   function timestampComparator(value1, value2) {
@@ -193,19 +193,19 @@ transformStatValues = (req, statId, values) => {
   valuesObj.data.sort(timestampComparator);
 
   valuesObj.numeric = (valuesObj.data.findIndex(value => isNaN(value.value)) === -1);
-  valuesObj.statUrl = `${getAPIBaseUrl(req)}/${statId}`;
+  valuesObj.statUrl = `${getAPIBaseUrlForStats(req)}/${statId}`;
   return valuesObj;
 }
 
-getAPIBaseUrl = req => {
+getAPIBaseUrlForStats = req => {
   return req.protocol + "://" + req.get('host') + "/api/stats";
 }
 
-getUIBaseUrl = req => {
+getUIBaseUrlForStats = req => {
   return req.protocol + "://localhost:3000/stat"; // TODO get host dynamically
 }
 
-// Error setting function
+// Error setting functions
 // TODO https://expressjs.com/en/guide/error-handling.html
 setInvalidPayload = (res) => {
   res.status(400).json({ msg: 'invalid payload' });

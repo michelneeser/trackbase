@@ -37,7 +37,7 @@ class Stat extends React.Component {
   loadStatData = async (isRefresh) => {
     try {
       const statId = this.props.match.params.statId;
-      const stat = (await axios.get(`${config.get('apiBaseUrl')}/${statId}`)).data;
+      const stat = (await axios.get(`${config.get('apiBaseUrl')}/stats/${statId}`)).data;
       stat.values = (await axios.get(stat.valuesUrl)).data;
       this.loading = false;
       this.setState(state => ({
@@ -92,8 +92,8 @@ class Stat extends React.Component {
       const stat = this.state.stat;
       content = (
         <div>
-          <Title text={stat.name ? stat.name : 'Your stat'} />
-          <Subtitle text="This is your very own stats page - enjoy!" />
+          <Title text={stat.name ? stat.name : 'New Stat'} />
+          <Subtitle text="This is your very own stats page &mdash; enjoy!" />
 
           <hr className="my-5" />
           <div className="row">
@@ -101,7 +101,7 @@ class Stat extends React.Component {
               <About
                 statId={stat.statId}
                 statUrl={stat.url}
-                uiUrl={stat.uiUrl}
+                statUiUrl={stat.uiUrl}
                 statName={stat.name}
                 statDescription={stat.description}
                 setStatProperty={this.setStatProperty}

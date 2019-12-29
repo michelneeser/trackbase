@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import background from './header-bg.jpg';
 
-import createNewStatAndRedirect from '../../../utils/history';
+import { createNewStatAndRedirect } from '../../../utils/history';
 
 class Header extends React.Component {
   render() {
@@ -22,11 +22,13 @@ class Header extends React.Component {
   }
 }
 
-// image source: https://unsplash.com/photos/STzgkQQVRlw
+// image source: https://unsplash.com/photos/uR6dIgDnt38
+// backup image source: https://unsplash.com/photos/STzgkQQVRlw
 const Background = styled.div`
   background-image: url(${background});
   background-size: cover;
-  padding: 5rem 0;
+  background-position: 0% 40%;
+  padding: 8rem 0;
   position: relative;
   z-index: 1;
 

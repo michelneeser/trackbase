@@ -8,7 +8,7 @@ const transform = {
   }
 };
 
-const statSchema = new mongoose.Schema({
+const collectionSchema = new mongoose.Schema({
   name: {
     type: String,
     default: ''
@@ -17,7 +17,7 @@ const statSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  statId: {
+  collectionId: {
     type: String,
     default: generateId,
     index: true
@@ -30,21 +30,11 @@ const statSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  chart: {
-    type: Boolean,
-    default: true
-  },
-  showroom: {
-    type: Boolean,
-    default: false
-  },
-  values: {
+  stats: {
     data: [
       {
-        valueId: { type: String, default: generateId },
-        value: String,
-        timestamp: { type: Date, default: Date.now },
-        created: { type: Date, default: Date.now }
+        statId: { type: String },
+        added: { type: Date, default: Date.now }
       }
     ]
   }
@@ -53,4 +43,4 @@ const statSchema = new mongoose.Schema({
   toJSON: transform
 });
 
-module.exports = mongoose.model('rec', statSchema);
+module.exports = mongoose.model('coll', collectionSchema);
