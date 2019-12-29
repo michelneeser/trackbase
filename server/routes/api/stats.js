@@ -123,15 +123,16 @@ router.delete('/:statId/values/:valueId', async (req, res) => {
   }
 });
 
-// @route    PUT /api/stats/:statId/name
-// @desc     updates a single stat (currently, properties 'name' and 'withChart' can be updated)
+// @route    PUT /api/stats/:statId
+// @desc     updates a single stat (currently, properties 'name', 'description' and 'withChart' can be updated)
 // @access   public
 router.put('/:statId', async (req, res) => {
   const statId = req.params.statId;
-  const { name, withChart } = req.body;
+  const { name, description, withChart } = req.body;
 
   // TODO replace validation with https://express-validator.github.io
-  if (!name && typeof withChart !== 'boolean') {
+  // TODO accept empty values (it must be possible to reset the name or description to an empty value)
+  if (!name && !description && typeof withChart !== 'boolean') {
     setInvalidPayload(res);
     return;
   }
@@ -139,6 +140,7 @@ router.put('/:statId', async (req, res) => {
   try {
     let stat = await getStat(statId);
     if (name) stat.name = name;
+    if (description) stat.description = description;
     if (typeof withChart === 'boolean') stat.withChart = withChart;
 
     stat = await stat.save();

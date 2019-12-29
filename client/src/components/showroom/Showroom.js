@@ -40,7 +40,7 @@ class Showroom extends React.Component {
         const uiUrl = new URL(stat.uiUrl);
         return (
           <div key={stat.statId} className="col-xl-4 pb-5">
-            <div key={stat.statId} className="card shadow">
+            <StyledCard key={stat.statId} className="card shadow">
               <div className="card-header">
                 {stat.name || stat.statId}
                 {stat.withChart ? (
@@ -51,11 +51,20 @@ class Showroom extends React.Component {
               </div>
               <div className="card-body">
                 <div className="card-text">
-                  Created: <Timestamp timestamp={stat.created} />
+                  {stat.description ? (
+                    <p>
+                      <span className="font-weight-bold">Description: </span>
+                      {stat.description}
+                    </p>
+                  ) : ''}
+                  <p>
+                    <span className="font-weight-bold">Created: </span>
+                    <Timestamp timestamp={stat.created} />
+                  </p>
                 </div>
-                <Link to={uiUrl.pathname} className="btn btn-outline-dark btn-sm mt-3">Go to stat</Link>
+                <StyledLink to={uiUrl.pathname} className="btn btn-outline-dark btn-sm">Go to stat</StyledLink>
               </div>
-            </div>
+            </StyledCard>
           </div>
         );
       });
@@ -79,10 +88,19 @@ class Showroom extends React.Component {
   }
 }
 
+const StyledCard = styled.div`
+  min-height: 15rem;
+`;
+
 const StyledOcticon = styled.span`
   position: absolute;
   right: 1rem;
   top: 0.6rem;
+`;
+
+const StyledLink = styled(Link)`
+  position: absolute;
+  bottom: 1.3rem;
 `;
 
 export default Showroom;

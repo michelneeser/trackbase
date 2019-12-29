@@ -13,6 +13,10 @@ const statSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  description: {
+    type: String,
+    default: ''
+  },
   statId: {
     type: String,
     default: generateId,

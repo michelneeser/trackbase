@@ -69,6 +69,12 @@ class Stat extends React.Component {
     ));
   }
 
+  setDescription = (description) => {
+    this.setState(state => (
+      { stat: { ...state.stat, description } }
+    ));
+  }
+
   setWithChart = (withChart) => {
     this.setState(state => (
       { stat: { ...state.stat, withChart } }
@@ -105,6 +111,8 @@ class Stat extends React.Component {
             uiUrl={stat.uiUrl}
             statName={stat.name}
             setName={this.setName}
+            statDescription={stat.description}
+            setDescription={this.setDescription}
             statCreated={stat.created} />
 
           <Controls

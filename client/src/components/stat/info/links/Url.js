@@ -28,15 +28,15 @@ class Url extends React.Component {
     return (
       <div>
         <div className="mt-2">
-          <span className="font-weight-bold">{this.props.name}: </span>
-
-          <OverlayTrigger
-            placement="right"
-            overlay={props => (
-              <Tooltip {...props} show={props.show.toString()}>{this.props.description}</Tooltip>)}>
-            <span>{this.props.url}</span>
-          </OverlayTrigger>
-
+          <span className="font-weight-bold">{this.props.name}:</span>
+          {this.props.showUrl ? (
+            <OverlayTrigger
+              placement="right"
+              overlay={props => (
+                <Tooltip {...props} show={props.show.toString()}>{this.props.description}</Tooltip>)}>
+              <span> {this.props.url}</span>
+            </OverlayTrigger>
+          ) : ''}
           <StyledBadge className="badge badge-warning ml-2" onClick={this.copyUrl} ref={this.copyBadge}>copy</StyledBadge>
         </div>
 
@@ -67,6 +67,10 @@ Url.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired
+}
+
+Url.defaultProps = {
+  showUrl: true
 }
 
 export default Url;
