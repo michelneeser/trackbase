@@ -41,7 +41,7 @@ class Description extends React.Component {
     try {
       event.preventDefault();
       const stat = (await axios.put(this.props.statUrl, { description: this.state.modalValue })).data;
-      this.props.setDescription(stat.description);
+      this.props.setStatProperty('description', stat.description);
       this.toggleModal();
     } catch (error) {
       console.log(error);
@@ -86,7 +86,7 @@ const StyledBadge = styled.span`
 Description.propTypes = {
   statUrl: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  setDescription: PropTypes.func.isRequired
+  setStatProperty: PropTypes.func.isRequired
 }
 
 export default Description;

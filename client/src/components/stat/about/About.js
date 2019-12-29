@@ -13,8 +13,8 @@ class About extends React.Component {
       <StyledWrapper className="border shadow-sm p-4">
         <h4 className="alert-heading">About</h4>
         <hr />
-        <Name statId={this.props.statId} statUrl={this.props.statUrl} name={this.props.statName} setName={this.props.setName} />
-        <Description statUrl={this.props.statUrl} description={this.props.statDescription} setDescription={this.props.setDescription} />
+        <Name statId={this.props.statId} statUrl={this.props.statUrl} name={this.props.statName} setStatProperty={this.props.setStatProperty} />
+        <Description statUrl={this.props.statUrl} description={this.props.statDescription} setStatProperty={this.props.setStatProperty} />
         <div className="mt-2">
           <span className="font-weight-bold">Created: </span>
           <Timestamp timestamp={this.props.statCreated} />
@@ -39,9 +39,8 @@ About.propTypes = {
   statUrl: PropTypes.string.isRequired,
   uiUrl: PropTypes.string.isRequired,
   statName: PropTypes.string.isRequired,
-  setName: PropTypes.func.isRequired,
   statDescription: PropTypes.string.isRequired,
-  setDescription: PropTypes.func.isRequired,
+  setStatProperty: PropTypes.func.isRequired,
   statCreated: PropTypes.string.isRequired
 }
 

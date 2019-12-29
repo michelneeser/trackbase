@@ -37,38 +37,40 @@ class Showroom extends React.Component {
         </div>
       );
     } else {
-      const statsToShow = this.state.stats.map(stat => {
-        const uiUrl = new URL(stat.uiUrl);
-        return (
-          <div key={stat.statId} className="col-xl-4 pb-5">
-            <StyledCard key={stat.statId} className="card shadow">
-              <div className="card-header">
-                {stat.name || stat.statId}
-                {stat.withChart ? (
-                  <StyledOcticon>
-                    <Octicon icon={Graph} size="small" />
-                  </StyledOcticon>
-                ) : ''}
-              </div>
-              <div className="card-body">
-                <div className="card-text">
-                  {stat.description ? (
-                    <p>
-                      <span className="font-weight-bold">Description: </span>
-                      {truncText(stat.description, 50)}
-                    </p>
+      const statsToShow = this.state.stats
+        .filter(stat => stat.showroom)
+        .map(stat => {
+          const uiUrl = new URL(stat.uiUrl);
+          return (
+            <div key={stat.statId} className="col-xl-4 pb-5">
+              <StyledCard key={stat.statId} className="card shadow">
+                <div className="card-header">
+                  {stat.name || stat.statId}
+                  {stat.chart ? (
+                    <StyledOcticon>
+                      <Octicon icon={Graph} size="small" />
+                    </StyledOcticon>
                   ) : ''}
-                  <p>
-                    <span className="font-weight-bold">Created: </span>
-                    <Timestamp timestamp={stat.created} />
-                  </p>
                 </div>
-                <StyledLink to={uiUrl.pathname} className="btn btn-outline-dark btn-sm">Go to stat</StyledLink>
-              </div>
-            </StyledCard>
-          </div>
-        );
-      });
+                <div className="card-body">
+                  <div className="card-text">
+                    {stat.description ? (
+                      <p>
+                        <span className="font-weight-bold">Description: </span>
+                        {truncText(stat.description, 50)}
+                      </p>
+                    ) : ''}
+                    <p>
+                      <span className="font-weight-bold">Created: </span>
+                      <Timestamp timestamp={stat.created} />
+                    </p>
+                  </div>
+                  <StyledLink to={uiUrl.pathname} className="btn btn-outline-dark btn-sm">Go to stat</StyledLink>
+                </div>
+              </StyledCard>
+            </div>
+          );
+        });
 
       content = (
         <div>

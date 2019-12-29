@@ -41,7 +41,7 @@ class Name extends React.Component {
     try {
       event.preventDefault();
       const stat = (await axios.put(this.props.statUrl, { name: this.state.modalValue })).data;
-      this.props.setName(stat.name);
+      this.props.setStatProperty('name', stat.name);
       this.toggleModal();
     } catch (error) {
       console.log(error);
@@ -87,7 +87,7 @@ Name.propTypes = {
   statId: PropTypes.string.isRequired,
   statUrl: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  setName: PropTypes.func.isRequired
+  setStatProperty: PropTypes.func.isRequired
 }
 
 export default Name;

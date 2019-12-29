@@ -26,9 +26,17 @@ const statSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  withChart: {
+  public: {
+    type: Boolean,
+    default: false
+  },
+  chart: {
     type: Boolean,
     default: true
+  },
+  showroom: {
+    type: Boolean,
+    default: false
   },
   values: {
     data: [

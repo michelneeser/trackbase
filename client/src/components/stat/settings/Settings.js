@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import styled from 'styled-components';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 import Octicon, { CloudDownload } from '@primer/octicons-react';
 
 class Settings extends React.Component {
@@ -10,7 +12,9 @@ class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showChart: props.showChart,
+      public: props.public,
+      chart: props.chart,
+      showroom: props.showroom,
       refreshInterval: 'req'
     }
   }
@@ -19,17 +23,21 @@ class Settings extends React.Component {
     if (prevProps.statId !== this.props.statId) {
       this.intervalId = 0;
       this.setState({
-        showChart: this.props.showChart,
+        public: this.props.public,
+        chart: this.props.chart,
+        showroom: this.props.showroom,
         refreshInterval: 'req'
       });
     }
   }
 
-  handleShowChartChange = async (event) => {
+  handleInputChange = async (event) => {
+    const fieldName = event.target.id;
+
     try {
-      const stat = (await axios.put(this.props.statUrl, { withChart: event.target.checked })).data;
-      this.props.setWithChart(stat.withChart);
-      this.setState({ showChart: stat.withChart });
+      const stat = (await axios.put(this.props.statUrl, { [fieldName]: event.target.checked })).data;
+      this.props.setStatProperty(fieldName, stat[fieldName]);
+      this.setState({ [fieldName]: stat[fieldName] });
     } catch (error) {
       console.error(error);
     }
@@ -50,20 +58,46 @@ class Settings extends React.Component {
       <StyledWrapper className="border shadow-sm mt-5 mt-xl-0 p-4">
         <h4 className="alert-heading">Settings</h4>
         <hr />
-        <div className="custom-control custom-switch mt-4">
-          <input type="checkbox" className="custom-control-input" id="keepPrivateToggle" />
-          <label className="custom-control-label" htmlFor="keepPrivateToggle">keep private</label>
-        </div>
-        <div className="custom-control custom-switch mt-2">
-          <input type="checkbox" className="custom-control-input" id="displayInShowroomToggle" />
-          <label className="custom-control-label" htmlFor="displayInShowroomToggle">display in showroom</label>
-        </div>
-        <div className="custom-control custom-switch mt-2">
-          <input type="checkbox" className="custom-control-input" id="showChartToggle"
-            checked={this.state.showChart}
-            onChange={this.handleShowChartChange} />
-          <label className="custom-control-label" htmlFor="showChartToggle">show chart</label>
-        </div>
+
+        {/* show chart */}
+        <OverlayTrigger
+          placement="right"
+          overlay={props => (
+            <Tooltip {...props} show={props.show.toString()}>enables or disables the chart displayed below</Tooltip>)}>
+          <div className="custom-control custom-switch mt-4">
+            <input type="checkbox" className="custom-control-input" id="chart"
+              checked={this.state.chart}
+              onChange={this.handleInputChange} />
+            <label className="custom-control-label" htmlFor="chart">show chart</label>
+          </div>
+        </OverlayTrigger>
+
+        {/* publicly accessible */}
+        <OverlayTrigger
+          placement="right"
+          overlay={props => (
+            <Tooltip {...props} show={props.show.toString()}>if active, anyone is allowed to access this stat if the exact URL is known</Tooltip>)}>
+          <div className="custom-control custom-switch mt-2">
+            <input type="checkbox" className="custom-control-input" id="public"
+              checked={this.state.public}
+              onChange={this.handleInputChange} />
+            <label className="custom-control-label" htmlFor="public">publicly accessible</label>
+          </div>
+        </OverlayTrigger>
+
+        {/* display in showroom */}
+        <OverlayTrigger
+          placement="right"
+          overlay={props => (
+            <Tooltip {...props} show={props.show.toString()}>if active, this stat will be publicly displayed in the uStats showroom</Tooltip>)}>
+          <div className="custom-control custom-switch mt-2">
+            <input type="checkbox" className="custom-control-input" id="showroom"
+              checked={this.state.showroom}
+              onChange={this.handleInputChange} />
+            <label className="custom-control-label" htmlFor="showroom">display in showroom</label>
+          </div>
+        </OverlayTrigger>
+
         <hr />
         <div className="row mt-4">
           <div className="col-xl-8">
@@ -89,7 +123,7 @@ class Settings extends React.Component {
             </button>
           </div>
         </div>
-      </StyledWrapper>
+      </StyledWrapper >
     )
   }
 }
@@ -105,9 +139,11 @@ const StyledWrapper = styled.div`
 Settings.propTypes = {
   statId: PropTypes.string.isRequired,
   statUrl: PropTypes.string.isRequired,
-  showChart: PropTypes.bool.isRequired,
+  public: PropTypes.bool.isRequired,
+  chart: PropTypes.bool.isRequired,
+  showroom: PropTypes.bool.isRequired,
+  setStatProperty: PropTypes.func.isRequired,
   refreshStat: PropTypes.func.isRequired,
-  setWithChart: PropTypes.func.isRequired
 }
 
 export default Settings;

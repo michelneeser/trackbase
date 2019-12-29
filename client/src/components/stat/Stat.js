@@ -55,6 +55,12 @@ class Stat extends React.Component {
     this.setState({ refresh: true });
   }
 
+  setStatProperty = (name, value) => {
+    this.setState(state => (
+      { stat: { ...state.stat, [name]: value } }
+    ));
+  }
+
   setValues = (values) => {
     this.setState(state => {
       const stat = state.stat;
@@ -62,24 +68,6 @@ class Stat extends React.Component {
         stat: { ...stat, values }
       }
     });
-  }
-
-  setName = (name) => {
-    this.setState(state => (
-      { stat: { ...state.stat, name } }
-    ));
-  }
-
-  setDescription = (description) => {
-    this.setState(state => (
-      { stat: { ...state.stat, description } }
-    ));
-  }
-
-  setWithChart = (withChart) => {
-    this.setState(state => (
-      { stat: { ...state.stat, withChart } }
-    ));
   }
 
   render() {
@@ -115,18 +103,19 @@ class Stat extends React.Component {
                 statUrl={stat.url}
                 uiUrl={stat.uiUrl}
                 statName={stat.name}
-                setName={this.setName}
                 statDescription={stat.description}
-                setDescription={this.setDescription}
+                setStatProperty={this.setStatProperty}
                 statCreated={stat.created} />
             </div>
             <div className="col-xl-6">
               <Settings
                 statId={stat.statId}
                 statUrl={stat.url}
-                showChart={stat.withChart}
-                refreshStat={this.refresh}
-                setWithChart={this.setWithChart} />
+                chart={stat.chart}
+                public={stat.public}
+                showroom={stat.showroom}
+                setStatProperty={this.setStatProperty}
+                refreshStat={this.refresh} />
             </div>
           </div>
 
