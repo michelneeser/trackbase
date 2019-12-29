@@ -8,7 +8,7 @@ import truncText from 'trunc-text';
 
 import Title from '../common/Title';
 import Subtitle from '../common/Subtitle';
-import Timestamp from '../stat/Timestamp';
+import Timestamp from '../common/Timestamp';
 
 class Showroom extends React.Component {
   loading = true;

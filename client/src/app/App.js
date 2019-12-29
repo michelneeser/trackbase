@@ -2,12 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Navigation from '../components/common/Navigation';
-import Header from '../components/home/Header';
-import Features from '../components/home/Features';
+import Navigation from '../components/navigation/Navigation';
+import Header from '../components/home/header/Header';
+import Features from '../components/home/features/Features';
 import Stat from '../components/stat/Stat';
 import Showroom from '../components/showroom/Showroom';
-import Footer from '../components/common/Footer';
+import Footer from '../components/footer/Footer';
 
 import './App.scss';
 

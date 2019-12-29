@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import background from './header-bg.jpg';
 
-import createNewStatAndRedirect from '../../utils/history';
+import createNewStatAndRedirect from '../../../utils/history';
 
 class Header extends React.Component {
   render() {

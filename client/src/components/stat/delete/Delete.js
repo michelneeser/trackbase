@@ -26,7 +26,7 @@ class Delete extends React.Component {
 
   render() {
     return (
-      <div className="mt-5">
+      <div>
         <button type="button" className="btn btn-danger btn-block" onClick={this.toggleModal}>delete stat</button>
 
         <Modal show={this.state.showModal} onHide={this.toggleModal} centered>

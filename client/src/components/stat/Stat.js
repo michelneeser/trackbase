@@ -4,12 +4,13 @@ import config from 'react-global-configuration';
 
 import Title from '../common/Title';
 import Subtitle from '../common/Subtitle';
-import Info from './info/Info';
-import Controls from './controls/Controls';
+import About from './about/About';
+import Settings from './settings/Settings';
+import AddValue from './add-value/AddValue';
 import Chart from './values/chart/Chart';
-import ValueList from './values/ValueList';
-import Delete from './controls/Delete';
-import Notification from './Notification';
+import Values from './values/Values';
+import Delete from './delete/Delete';
+import Notification from '../common/Notification';
 
 class Stat extends React.Component {
   loading = true;
@@ -105,38 +106,55 @@ class Stat extends React.Component {
         <div>
           <Title text={stat.name ? stat.name : 'Your stat'} />
           <Subtitle text="This is your very own stats page - enjoy!" />
-          <Info
-            statId={stat.statId}
-            statUrl={stat.url}
-            uiUrl={stat.uiUrl}
-            statName={stat.name}
-            setName={this.setName}
-            statDescription={stat.description}
-            setDescription={this.setDescription}
-            statCreated={stat.created} />
 
-          <Controls
+          <hr className="my-5" />
+          <div className="row">
+            <div className="col-xl-6">
+              <About
+                statId={stat.statId}
+                statUrl={stat.url}
+                uiUrl={stat.uiUrl}
+                statName={stat.name}
+                setName={this.setName}
+                statDescription={stat.description}
+                setDescription={this.setDescription}
+                statCreated={stat.created} />
+            </div>
+            <div className="col-xl-6">
+              <Settings
+                statId={stat.statId}
+                statUrl={stat.url}
+                showChart={stat.withChart}
+                refreshStat={this.refresh}
+                setWithChart={this.setWithChart} />
+            </div>
+          </div>
+
+          <hr className="my-5" />
+          <AddValue
             statId={stat.statId}
-            statUrl={stat.url}
-            showChart={stat.withChart}
             valuesUrl={stat.valuesUrl}
-            refreshStat={this.refresh}
-            setValues={this.setValues}
-            setWithChart={this.setWithChart} />
+            setValues={this.setValues} />
 
           {stat.withChart ? (
-            <Chart
-              values={stat.values.data}
-              numeric={stat.values.numeric} />
+            <div>
+              <hr className="my-5" />
+              <Chart
+                values={stat.values.data}
+                numeric={stat.values.numeric} />
+            </div>
           ) : ''}
 
           <hr className="my-5" />
-          <ValueList
+          <Values
             valuesUrl={stat.valuesUrl}
             values={stat.values.data}
             setValues={this.setValues} />
 
-          <Delete statUrl={stat.url} />
+          <hr className="my-5" />
+          <div className="mt-5">
+            <Delete statUrl={stat.url} />
+          </div>
 
           <Notification text={updateHintText} onDismiss={() => this.setState({ updatedValues: -1 })} />
         </div>

@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import LineChart from './LineChart';
-import BarChart from './BarChart';
+import LineChart from './line/LineChart';
+import BarChart from './bar/BarChart';
 
 class Chart extends React.Component {
   render() {
     return (
       <div>
-        <hr className="my-5" />
         {this.props.numeric ?
           <LineChart values={this.props.values} /> :
           <BarChart values={this.props.values} />}

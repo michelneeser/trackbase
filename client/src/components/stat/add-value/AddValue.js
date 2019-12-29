@@ -6,7 +6,7 @@ import Datetime from 'react-datetime';
 import Octicon, { Watch, Plus } from '@primer/octicons-react';
 import './Datetime.css';
 
-import Notification from '../../Notification';
+import Notification from '../../common/Notification';
 
 class AddValue extends React.Component {
   constructor(props) {
@@ -89,7 +89,7 @@ class AddValue extends React.Component {
 
     return (
       <div>
-        <form className="form mt-4 p-3 border shadow-sm" onSubmit={this.addValue} noValidate>
+        <form className="form mt-5 p-3 border shadow-sm" onSubmit={this.addValue} noValidate>
           <div className="row">
             <div className="col-xl-4">
               <Datetime onChange={this.handleTimestampChange} value={this.state.timestamp} timeFormat={datepickerTimeFormat} renderInput={(props) => (

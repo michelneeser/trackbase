@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Octicon, { Trashcan, Reply, Thumbsdown } from '@primer/octicons-react';
 
-import Timestamp from '../../stat/Timestamp';
+import Timestamp from '../../common/Timestamp';
 
 class Values extends React.Component {
   deleteValue = async (event) => {

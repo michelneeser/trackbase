@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Url from './Url';
+import Url from './url/Url';
 
 class Links extends React.Component {
   render() {

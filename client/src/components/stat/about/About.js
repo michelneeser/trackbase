@@ -1,31 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import Name from './Name';
-import Description from './Description';
+import Name from './name/Name';
+import Description from './description/Description';
 import Links from './links/Links';
-import Timestamp from '../Timestamp'
+import Timestamp from '../../common/Timestamp'
 
-class Info extends React.Component {
+class About extends React.Component {
   render() {
     return (
-      <div className="alert alert-warning p-4 mb-5 shadow">
-        <h4 className="alert-heading">About this stat</h4>
+      <StyledWrapper className="border shadow-sm p-4">
+        <h4 className="alert-heading">About</h4>
         <hr />
         <Name statId={this.props.statId} statUrl={this.props.statUrl} name={this.props.statName} setName={this.props.setName} />
         <Description statUrl={this.props.statUrl} description={this.props.statDescription} setDescription={this.props.setDescription} />
-        <hr />
-        <Links publicUrl={this.props.uiUrl} apiUrl={this.props.statUrl} />
         <div className="mt-2">
           <span className="font-weight-bold">Created: </span>
           <Timestamp timestamp={this.props.statCreated} />
         </div>
-      </div>
+        <hr />
+        <Links publicUrl={this.props.uiUrl} apiUrl={this.props.statUrl} />
+      </StyledWrapper>
     )
   }
 }
 
-Info.propTypes = {
+const StyledWrapper = styled.div`
+  background-color: #fcefdc;
+
+  @media(min-width: 1200px) {
+    height: 18rem;
+  }
+`;
+
+About.propTypes = {
   statId: PropTypes.string.isRequired,
   statUrl: PropTypes.string.isRequired,
   uiUrl: PropTypes.string.isRequired,
@@ -36,4 +45,4 @@ Info.propTypes = {
   statCreated: PropTypes.string.isRequired
 }
 
-export default Info;
+export default About;
