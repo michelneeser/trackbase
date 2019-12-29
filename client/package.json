@@ -29,7 +29,8 @@
     "react-global-configuration": "^1.4.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
-    "styled-components": "^4.4.1"
+    "styled-components": "^4.4.1",
+    "trunc-text": "^1.0.2"
   },
   "eslintConfig": {
     "extends": "react-app",

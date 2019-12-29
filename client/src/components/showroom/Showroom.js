@@ -4,6 +4,7 @@ import axios from 'axios';
 import config from 'react-global-configuration';
 import styled from 'styled-components';
 import Octicon, { Graph } from '@primer/octicons-react';
+import truncText from 'trunc-text';
 
 import Title from '../common/Title';
 import Subtitle from '../common/Subtitle';
@@ -54,7 +55,7 @@ class Showroom extends React.Component {
                   {stat.description ? (
                     <p>
                       <span className="font-weight-bold">Description: </span>
-                      {stat.description}
+                      {truncText(stat.description, 50)}
                     </p>
                   ) : ''}
                   <p>
