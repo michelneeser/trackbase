@@ -130,7 +130,8 @@ class Stat extends React.Component {
               <hr className="my-5" />
               <Chart
                 values={stat.values.data}
-                numeric={stat.values.numeric} />
+                numeric={stat.values.numeric}
+                counting={stat.values.counting} />
             </div>
           ) : ''}
 
@@ -138,6 +139,7 @@ class Stat extends React.Component {
           <Values
             valuesUrl={stat.valuesUrl}
             values={stat.values.data}
+            count={stat.values.count}
             setValues={this.setValues} />
 
           <hr className="my-5" />

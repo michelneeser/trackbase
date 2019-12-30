@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Bar } from 'react-chartjs-2';
 
 class BarChart extends Component {
@@ -8,14 +9,24 @@ class BarChart extends Component {
 
     // chart data
     const valuesMap = new Map();
-    values.forEach(val => {
-      const key = val.value;
-      if (valuesMap.has(key)) {
-        valuesMap.set(key, parseInt(valuesMap.get(key)) + 1);
-      } else {
-        valuesMap.set(key, 1);
-      }
-    });
+    if (this.props.counting) {
+      // one bar per day with accumulated occurrences
+      values.forEach(val => {
+        const key = moment(val.timestamp).format('L');
+        if (!valuesMap.get(key)) valuesMap.set(key, 0);
+        valuesMap.set(key, valuesMap.get(key) + 1);
+      });
+    } else {
+      // one bar per value with accumulated occurrences
+      values.forEach(val => {
+        const key = val.value;
+        if (valuesMap.has(key)) {
+          valuesMap.set(key, parseInt(valuesMap.get(key)) + 1);
+        } else {
+          valuesMap.set(key, 1);
+        }
+      });
+    }
 
     const chartLabels = Array.from(valuesMap.keys());
     const chartValues = Array.from(valuesMap.values());
@@ -55,7 +66,8 @@ class BarChart extends Component {
 }
 
 BarChart.propTypes = {
-  values: PropTypes.array.isRequired
+  values: PropTypes.array.isRequired,
+  counting: PropTypes.bool.isRequired
 }
 
 export default BarChart;

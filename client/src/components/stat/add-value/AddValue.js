@@ -59,17 +59,9 @@ class AddValue extends React.Component {
       event.preventDefault();
       const { value, timestamp, isTimestampValid } = this.state;
 
-      let valid = true;
-      if (!value) {
-        this.valueField.current.classList.add('is-invalid');
-        valid = false;
-      }
       if (!isTimestampValid) {
         this.timestampField.current.classList.add('is-invalid');
-        valid = false;
-      }
-
-      if (valid) {
+      } else {
         const values = (await axios.post(this.props.valuesUrl, { value, timestamp })).data;
         this.props.setValues(values);
         this.setState({

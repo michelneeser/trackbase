@@ -8,9 +8,12 @@ class Chart extends React.Component {
   render() {
     return (
       <div>
-        {this.props.numeric ?
-          <LineChart values={this.props.values} /> :
-          <BarChart values={this.props.values} />}
+        {(this.props.numeric || this.props.values.length === 0) ?
+          <LineChart
+            values={this.props.values} /> :
+          <BarChart
+            values={this.props.values}
+            counting={this.props.counting} />}
       </div>
     );
   }
@@ -18,7 +21,8 @@ class Chart extends React.Component {
 
 Chart.propTypes = {
   values: PropTypes.array.isRequired,
-  numeric: PropTypes.bool.isRequired
+  numeric: PropTypes.bool.isRequired,
+  counting: PropTypes.bool.isRequired
 }
 
 export default Chart;

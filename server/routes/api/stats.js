@@ -76,11 +76,7 @@ router.post('/:statId/values', async (req, res) => {
   const statId = req.params.statId;
   let { value, timestamp } = req.body;
 
-  // TODO replace validation and validate timestamp with https://express-validator.github.io
-  if (!value) {
-    setInvalidPayload(res);
-    return;
-  }
+  // TODO validate timestamp with https://express-validator.github.io
   if (!timestamp) {
     timestamp = moment();
   }
@@ -193,7 +189,10 @@ transformStatValues = (req, statId, values) => {
   }
   valuesObj.data.sort(timestampComparator);
 
-  valuesObj.numeric = (valuesObj.data.findIndex(value => isNaN(value.value)) === -1);
+  const count = valuesObj.data.length;
+  valuesObj.count = count;
+  valuesObj.numeric = (count > 0 && valuesObj.data.findIndex(value => (value.value === '' || isNaN(value.value))) === -1);
+  valuesObj.counting = (count > 0 && valuesObj.data.filter(value => value.value !== '').length === 0);
   valuesObj.statUrl = `${getAPIBaseUrlForStats(req)}/${statId}`;
   return valuesObj;
 }

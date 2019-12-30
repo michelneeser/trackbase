@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import Octicon, { Trashcan, Reply, Thumbsdown } from '@primer/octicons-react';
 
@@ -36,7 +37,7 @@ class Values extends React.Component {
             <Timestamp timestamp={value.timestamp} />
           </div>
           <div className="col-xl-6 mt-4 mt-xl-0 my-xl-auto d-none d-xl-block value">
-            {value.value}
+            {value.value !== '' ? value.value : '[no value]'}
           </div>
           <div className="col-xl-6 mt-4 mt-xl-0 my-xl-auto d-xl-none">
             {value.value} (<Timestamp timestamp={value.timestamp} />)
@@ -66,11 +67,18 @@ class Values extends React.Component {
 
     return (
       <div>
-        <h4 className="mb-4">Values</h4>
+        <h4 className="mb-4">Values ({this.props.count})</h4>
         <div>{valuesToRender}</div>
       </div>
     )
   }
+}
+
+Values.propTypes = {
+  valuesUrl: PropTypes.string.isRequired,
+  values: PropTypes.array.isRequired,
+  count: PropTypes.number.isRequired,
+  setValues: PropTypes.func.isRequired
 }
 
 export default Values;
