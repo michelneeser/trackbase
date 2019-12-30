@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 // connect to MongoDB
-const db = config.get("mongoDB.url");
+const db = process.env.MONGODB_URL || config.get("mongoDB.url");
 mongoose.connect(db, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
