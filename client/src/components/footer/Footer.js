@@ -9,7 +9,7 @@ class Footer extends React.Component {
         <div className="container text-muted">
           <div className="row">
             <div className="col-xl-4">
-              <p>&copy; 2020 ustats.io</p>
+              <p>&copy; 2020 trackbase.io</p>
               <p>Crafted with <Octicon icon={Heart} size="small" /> in Switzerland</p>
             </div>
             <div className="col-xl-4">

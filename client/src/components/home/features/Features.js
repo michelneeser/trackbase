@@ -38,7 +38,7 @@ class Features extends React.Component {
           </div>
           <div className="col-xl-4 mt-4">
             <StyledCard className="card shadow">
-              <div className="card-header bg-dark text-light">Connect to our API</div>
+              <div className="card-header bg-dark text-light">Connect To Our API</div>
               <div className="card-body">
                 <div className="card-text">
                   <p>Use our easy-to-use API to connect your devices. Basically everything connected to the Internet is able to send data to your stats.</p>
