@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const config = require('config');
+const path = require('path');
 
 const app = express();
 app.use(express.json());
@@ -21,6 +22,15 @@ app.use(cors());
 // set up routes
 app.use('/api/stats', require('./routes/api/stats'));
 app.use('/api/collections', require('./routes/api/collections'));
+
+// serve frontend in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('../client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
+  });
+}
 
 // start server
 const port = process.env.PORT || 5000;

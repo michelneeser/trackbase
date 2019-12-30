@@ -4,8 +4,8 @@
   "author": "Michel Neeser",
   "private": true,
   "scripts": {
-    "start": "node server",
-    "start-dev": "nodemon server"
+    "start": "node server.js",
+    "start-dev": "nodemon server.js"
   },
   "dependencies": {
     "config": "^3.2.4",

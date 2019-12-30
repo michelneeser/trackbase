@@ -4,8 +4,10 @@
   "author": "Michel Neeser",
   "private": true,
   "scripts": {
-    "start": "concurrently 'npm run start-dev --prefix server' 'npm start --prefix client'",
-    "mongo": "mongo 'mongodb+srv://ustats-pgwns.mongodb.net/ustats' --username ustats"
+    "start": "npm start --prefix server",
+    "start-dev": "concurrently 'npm run start-dev --prefix server' 'npm start --prefix client'",
+    "mongo": "mongo 'mongodb+srv://ustats-pgwns.mongodb.net/ustats' --username ustats",
+    "heroku-postbuild": "npm install --prefix server && npm install --prefix client && npm run build --prefix client"
   },
   "devDependencies": {
     "concurrently": "^5.0.0"
