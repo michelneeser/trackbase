@@ -6,6 +6,8 @@ import Title from '../common/Title';
 import Subtitle from '../common/Subtitle';
 import Settings from './settings/Settings';
 import About from './about/About';
+import AddStat from './add-stat/AddStat';
+import Stats from './stats/Stats';
 
 class Collection extends React.Component {
   loading = true;
@@ -31,7 +33,7 @@ class Collection extends React.Component {
     try {
       const collectionId = this.props.match.params.collectionId;
       const collection = (await axios.get(`${config.get('apiBaseUrl')}/collections/${collectionId}`)).data;
-      // stat.values = (await axios.get(stat.valuesUrl)).data;
+      collection.stats = (await axios.get(collection.statsUrl)).data;
       this.loading = false;
       this.setState(state => ({ collection }));
     } catch (error) {
@@ -82,6 +84,15 @@ class Collection extends React.Component {
                 setCollectionProperty={this.setCollectionProperty} />
             </div>
           </div>
+
+          <hr className="my-5" />
+          <AddStat />
+
+          <hr className="my-5" />
+          <Stats
+            collectionId={collection.collectionId}
+            stats={collection.stats.data}
+            count={collection.stats.count} />
         </div>
       );
     }

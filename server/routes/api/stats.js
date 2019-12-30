@@ -42,6 +42,35 @@ router.get('/:statId', async (req, res) => {
   }
 });
 
+// @route    PUT /api/stats/:statId
+// @desc     updates a single stat (currently, properties 'name', 'description', 'chart', 'public' and 'showroom' can be updated)
+// @access   public
+router.put('/:statId', async (req, res) => {
+  const statId = req.params.statId;
+  const { name, description, chart, public, showroom } = req.body;
+
+  // TODO replace validation with https://express-validator.github.io
+  // TODO accept empty values (it must be possible to reset the name or description to an empty value)
+  if (!name && !description && typeof chart !== 'boolean' && typeof public !== 'boolean' && typeof showroom !== 'boolean') {
+    setInvalidPayload(res);
+    return;
+  }
+
+  try {
+    let stat = await getStat(statId);
+    if (name) stat.name = name;
+    if (description) stat.description = description;
+    if (typeof chart === 'boolean') stat.chart = chart;
+    if (typeof public === 'boolean') stat.public = public;
+    if (typeof showroom === 'boolean') stat.showroom = showroom;
+
+    stat = await stat.save();
+    res.send(transformStat(req, stat));
+  } catch (error) {
+    setStatNotFound(res);
+  }
+});
+
 // @route    DELETE /api/stats/:statId
 // @desc     deletes a single stat
 // @access   public
@@ -116,35 +145,6 @@ router.delete('/:statId/values/:valueId', async (req, res) => {
     res.send(transformStatValues(req, statId, stat.values));
   } catch (error) {
     console.log(error);
-    setStatNotFound(res);
-  }
-});
-
-// @route    PUT /api/stats/:statId
-// @desc     updates a single stat (currently, properties 'name', 'description', 'chart', 'public' and 'showroom' can be updated)
-// @access   public
-router.put('/:statId', async (req, res) => {
-  const statId = req.params.statId;
-  const { name, description, chart, public, showroom } = req.body;
-
-  // TODO replace validation with https://express-validator.github.io
-  // TODO accept empty values (it must be possible to reset the name or description to an empty value)
-  if (!name && !description && typeof chart !== 'boolean' && typeof public !== 'boolean' && typeof showroom !== 'boolean') {
-    setInvalidPayload(res);
-    return;
-  }
-
-  try {
-    let stat = await getStat(statId);
-    if (name) stat.name = name;
-    if (description) stat.description = description;
-    if (typeof chart === 'boolean') stat.chart = chart;
-    if (typeof public === 'boolean') stat.public = public;
-    if (typeof showroom === 'boolean') stat.showroom = showroom;
-
-    stat = await stat.save();
-    res.send(transformStat(req, stat));
-  } catch (error) {
     setStatNotFound(res);
   }
 });

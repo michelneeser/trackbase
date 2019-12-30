@@ -102,8 +102,7 @@ class AddValue extends React.Component {
               <input type="text" className="form-control" placeholder="enter value"
                 value={this.state.value}
                 onChange={this.handleValueChange}
-                ref={this.valueField}
-                required />
+                ref={this.valueField} />
               <div className="invalid-feedback">
                 Please enter a value to add.
               </div>

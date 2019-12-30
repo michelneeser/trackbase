@@ -45,7 +45,7 @@ router.get('/:collectionId', async (req, res) => {
 });
 
 // @route    PUT /api/collections/:collectionId
-// @desc     updates a single stat (currently, properties 'name', 'description' and 'public' can be updated)
+// @desc     updates a single collection (currently, properties 'name', 'description' and 'public' can be updated)
 // @access   public
 router.put('/:collectionId', async (req, res) => {
   const collectionId = req.params.collectionId;
@@ -72,6 +72,47 @@ router.put('/:collectionId', async (req, res) => {
   }
 });
 
+// @route    GET /api/collections/:collectionId/stats
+// @desc     returns the stats of a single collection
+// @access   public
+router.get('/:collectionId/stats', async (req, res) => {
+  try {
+    const collectionId = req.params.collectionId;
+    const stats = await getCollectionStats(collectionId);
+    res.send(transformCollectionStats(req, collectionId, stats));
+  } catch (error) {
+    console.log(error);
+    setCollectionNotFound(res);
+  }
+});
+
+// @route    POST /api/collections/:collectionId/stats
+// @desc     adds a single stat to a collection
+// @access   public
+router.post('/:collectionId/stats', async (req, res) => {
+  const collectionId = req.params.collectionId;
+  let { statId } = req.body;
+
+  // TODO validate statId (check if existing)
+  if (!statId) {
+    setInvalidPayload(res);
+    return;
+  }
+
+  try {
+    let collection = await getCollection(collectionId);
+    collection.stats.data = [
+      { statId },
+      ...collection.stats.data
+    ];
+    collection = await collection.save();
+    res.send(transformCollectionStats(req, collectionId, collection.stats));
+  } catch (error) {
+    console.log(error);
+    setCollectionNotFound(res);
+  }
+});
+
 ///////////////////////
 // Utility functions //
 ///////////////////////
@@ -85,6 +126,12 @@ getCollection = async (collectionId) => {
   return collection;
 }
 
+getCollectionStats = async (collectionId) => {
+  const stats = await Collection.findOne({ collectionId }, 'stats');
+  if (!stats) throw Error();
+  return stats.stats;
+}
+
 transformCollection = (req, collection) => {
   let collectionObj = collection.toObject();
   delete collectionObj.stats;
@@ -92,6 +139,27 @@ transformCollection = (req, collection) => {
   collectionObj.uiUrl = `${getUIBaseUrlForCollections(req)}/${collectionObj.collectionId}`;
   collectionObj.statsUrl = `${getAPIBaseUrlForCollections(req)}/${collectionObj.collectionId}/stats`;
   return collectionObj;
+}
+
+transformCollectionStats = (req, collectionId, stats) => {
+  let statsObj = stats.toObject();
+  statsObj.data.forEach(stat => {
+    delete stat._id;
+    stat.url = `${getAPIBaseUrlForCollections(req)}/${collectionId}/stats/${stat.statId}`;
+    stat.originUrl = `${getAPIBaseUrlForStats(req)}/${stat.statId}`;
+  });
+
+  function timestampComparator(stat1, stat2) {
+    if (stat1.added < stat2.added) return 1;
+    if (stat1.added > stat2.added) return -1;
+    return 0;
+  }
+  statsObj.data.sort(timestampComparator);
+
+  const count = statsObj.data.length;
+  statsObj.count = count;
+  statsObj.collectionUrl = `${getAPIBaseUrlForCollections(req)}/${collectionId}`;
+  return statsObj;
 }
 
 getAPIBaseUrlForCollections = req => {
