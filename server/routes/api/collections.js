@@ -1,4 +1,5 @@
 const express = require('express');
+const config = require('config');
 const Collection = require('../../models/Collection');
 
 const router = express.Router();
@@ -94,11 +95,15 @@ transformCollection = (req, collection) => {
 }
 
 getAPIBaseUrlForCollections = req => {
-  return req.protocol + "://" + req.get('host') + "/api/collections";
+  return req.protocol + '://' + req.get('host') + '/api/collections';
 }
 
 getUIBaseUrlForCollections = req => {
-  return req.protocol + "://localhost:3000/collection"; // TODO get host dynamically
+  if (process.env.NODE_ENV === 'production') {
+    return req.protocol + '://' + req.get('host') + '/collection';
+  } else {
+    return config.get('client.url') + '/collection';
+  }
 }
 
 // Error setting functions

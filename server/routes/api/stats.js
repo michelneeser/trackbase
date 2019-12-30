@@ -1,4 +1,5 @@
 const express = require('express');
+const config = require('config');
 const Stat = require('../../models/Stat');
 const moment = require('moment');
 
@@ -198,11 +199,15 @@ transformStatValues = (req, statId, values) => {
 }
 
 getAPIBaseUrlForStats = req => {
-  return req.protocol + "://" + req.get('host') + "/api/stats";
+  return req.protocol + '://' + req.get('host') + '/api/stats';
 }
 
 getUIBaseUrlForStats = req => {
-  return req.protocol + "://localhost:3000/stat"; // TODO get host dynamically
+  if (process.env.NODE_ENV === 'production') {
+    return req.protocol + '://' + req.get('host') + '/stat';
+  } else {
+    return config.get('client.url') + '/stat';
+  }
 }
 
 // Error setting functions
