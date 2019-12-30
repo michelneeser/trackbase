@@ -23,13 +23,15 @@ app.use(cors());
 app.use('/api/stats', require('./routes/api/stats'));
 app.use('/api/collections', require('./routes/api/collections'));
 
-// serve frontend in production
+// serve frontend in production and trust proxy
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('../client/build'));
 
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
   });
+
+  app.enable('trust proxy');
 }
 
 // start server
