@@ -11,7 +11,7 @@ class Navigation extends React.Component {
     return (
       <Navbar bg="dark" variant="dark" expand="xl">
         <div className="container">
-          <Navbar.Brand href="/">uStats</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">uStats</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar-toggle" />
           <Navbar.Collapse id="navbar-toggle">
             <Nav className="mr-auto">
