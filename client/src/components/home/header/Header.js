@@ -49,6 +49,10 @@ const StyledBackground = styled.div`
   @media(max-width: 1200px) {
     padding: 4rem 0;
   }
+
+  @media(max-width: 576px) {
+    padding: 1rem 0;
+  }
 `;
 
 const StyledContent = styled.div`
@@ -60,6 +64,11 @@ const StyledContent = styled.div`
     padding: 3rem;
     width: 70%;
     overflow: hidden;
+  }
+
+  @media(max-width: 576px) {
+    padding: 1rem;
+    width: 90%;
   }
 `;
 

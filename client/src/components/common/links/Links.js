@@ -9,13 +9,13 @@ class Links extends React.Component {
       <div>
         <div className="d-none d-xl-block">
           <Url
-            name="Public URL"
+            name="Web"
             description="Use this URL to publicly show your stat, e.g. for sending to a friend."
             url={this.props.publicUrl} />
         </div>
         <div className="d-block d-xl-none">
           <Url
-            name="Public URL"
+            name="Web"
             showUrl={false}
             description="Use this URL to publicly show your stat, e.g. for sending to a friend."
             url={this.props.publicUrl} />

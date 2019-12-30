@@ -34,7 +34,7 @@ class Url extends React.Component {
               placement="right"
               overlay={props => (
                 <Tooltip {...props} show={props.show.toString()}>{this.props.description}</Tooltip>)}>
-              <span> {this.props.url}</span>
+              <span> {this.props.url.substring(0, 45)}</span>
             </OverlayTrigger>
           ) : ''}
           <StyledBadge className="badge badge-warning ml-2" onClick={this.copyUrl} ref={this.copyBadge}>copy</StyledBadge>
