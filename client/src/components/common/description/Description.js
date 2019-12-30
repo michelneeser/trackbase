@@ -59,12 +59,12 @@ class Description extends React.Component {
 
         <Modal show={this.state.showModal} onHide={this.toggleModal} centered>
           <Modal.Header closeButton>
-            <Modal.Title>Describe your stat</Modal.Title>
+            <Modal.Title>{this.props.modalTitle}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <form onSubmit={this.save}>
               <div className="form-group">
-                <p className="text-muted">Give your stat a nice description</p>
+                <p className="text-muted">{this.props.modalDescription}</p>
                 <input type="text" className="form-control" name="description" placeholder="Description" maxLength="100"
                   value={this.state.modalValue} onChange={this.handleModalValueChange} ref={this.inputField} />
               </div>

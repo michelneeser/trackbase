@@ -43,6 +43,34 @@ router.get('/:collectionId', async (req, res) => {
   }
 });
 
+// @route    PUT /api/collections/:collectionId
+// @desc     updates a single stat (currently, properties 'name', 'description' and 'public' can be updated)
+// @access   public
+router.put('/:collectionId', async (req, res) => {
+  const collectionId = req.params.collectionId;
+  const { name, description, public } = req.body;
+
+  // TODO replace validation with https://express-validator.github.io
+  // TODO accept empty values (it must be possible to reset the name or description to an empty value)
+  if (!name && !description && typeof public !== 'boolean') {
+    setInvalidPayload(res);
+    return;
+  }
+
+  try {
+    let collection = await getCollection(collectionId);
+    if (name) collection.name = name;
+    if (description) collection.description = description;
+    if (typeof public === 'boolean') collection.public = public;
+
+    collection = await collection.save();
+    res.send(transformCollection(req, collection));
+  } catch (error) {
+    console.error(error);
+    setCollectionNotFound(res);
+  }
+});
+
 ///////////////////////
 // Utility functions //
 ///////////////////////
@@ -75,6 +103,10 @@ getUIBaseUrlForCollections = req => {
 
 // Error setting functions
 // TODO https://expressjs.com/en/guide/error-handling.html
+setInvalidPayload = (res) => {
+  res.status(400).json({ msg: 'invalid payload' });
+}
+
 setCollectionNotFound = (res) => {
   res.status(404).json({ msg: 'collection not found' });
 }

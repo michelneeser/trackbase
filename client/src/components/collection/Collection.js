@@ -18,9 +18,7 @@ class Collection extends React.Component {
   }
 
   componentDidMount = async () => {
-    console.log("mounting");
     this.loadCollectionData();
-    console.log("mounted");
   }
 
   componentDidUpdate = (prevProps) => {
@@ -42,15 +40,12 @@ class Collection extends React.Component {
   }
 
   setCollectionProperty = (name, value) => {
-    // this.setState(state => (
-    //   { stat: { ...state.stat, [name]: value } }
-    // ));
+    this.setState(state => (
+      { collection: { ...state.collection, [name]: value } }
+    ));
   }
 
   render() {
-    const collection = this.state.collection;
-    console.log("rendering");
-
     let content;
     if (this.loading) {
       content = (
@@ -61,9 +56,10 @@ class Collection extends React.Component {
         </div>
       );
     } else {
+      const collection = this.state.collection;
       content = (
         <div>
-          <Title text="New Collection" />
+          <Title text={collection.name ? collection.name : 'New Collection'} />
           <Subtitle text="Assemble your stats on a single page &mdash; enjoy!" />
 
           <hr className="my-5" />

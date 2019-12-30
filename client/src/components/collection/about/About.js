@@ -12,9 +12,23 @@ class About extends React.Component {
     return (
       <StyledWrapper className="border shadow-sm p-4">
         <h4 className="alert-heading">About</h4>
+
         <hr />
-        <Name id={this.props.collectionId} updateUrl={this.props.collectionUrl} name={this.props.collectionName} setProperty={this.props.setCollectionProperty} />
-        <Description updateUrl={this.props.collectionUrl} description={this.props.collectionDescription} setProperty={this.props.setCollectionProperty} />
+        <Name
+          id={this.props.collectionId}
+          updateUrl={this.props.collectionUrl}
+          name={this.props.collectionName}
+          setProperty={this.props.setCollectionProperty}
+          modalTitle="Name your collection"
+          modalDescription="Give your collection a nice name" />
+
+        <Description
+          updateUrl={this.props.collectionUrl}
+          description={this.props.collectionDescription}
+          setProperty={this.props.setCollectionProperty}
+          modalTitle="Describe your collection"
+          modalDescription="Give your collection a nice description" />
+
         <div className="mt-2">
           <span className="font-weight-bold">Created: </span>
           <Timestamp timestamp={this.props.collectionCreated} />

@@ -14,7 +14,7 @@ class Header extends React.Component {
             <p className="lead text-center text-light">Log any data you want for free and with just one click.</p>
           </div>
           <div className="text-center mt-5">
-            <button type="button" className="btn btn-info" onClick={createNewStatAndRedirect.bind(this)}>Sounds great &mdash; Let's go!</button>
+            <button type="button" className="btn btn-secondary" onClick={createNewStatAndRedirect.bind(this)}>Sounds great &mdash; Let me start!</button>
           </div>
         </Content>
       </Background>

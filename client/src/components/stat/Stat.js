@@ -125,7 +125,7 @@ class Stat extends React.Component {
             valuesUrl={stat.valuesUrl}
             setValues={this.setValues} />
 
-          {stat.withChart ? (
+          {stat.chart ? (
             <div>
               <hr className="my-5" />
               <Chart

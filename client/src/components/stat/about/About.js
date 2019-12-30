@@ -12,9 +12,23 @@ class About extends React.Component {
     return (
       <StyledWrapper className="border shadow-sm p-4">
         <h4 className="alert-heading">About</h4>
+
         <hr />
-        <Name id={this.props.statId} updateUrl={this.props.statUrl} name={this.props.statName} setProperty={this.props.setStatProperty} />
-        <Description updateUrl={this.props.statUrl} description={this.props.statDescription} setProperty={this.props.setStatProperty} />
+        <Name
+          id={this.props.statId}
+          updateUrl={this.props.statUrl}
+          name={this.props.statName}
+          setProperty={this.props.setStatProperty}
+          modalTitle="Name your stat"
+          modalDescription="Give your stat a nice name to identify it in the future" />
+
+        <Description
+          updateUrl={this.props.statUrl}
+          description={this.props.statDescription}
+          setProperty={this.props.setStatProperty}
+          modalTitle="Describe your stat"
+          modalDescription="Give your stat a nice description" />
+
         <div className="mt-2">
           <span className="font-weight-bold">Created: </span>
           <Timestamp timestamp={this.props.statCreated} />
