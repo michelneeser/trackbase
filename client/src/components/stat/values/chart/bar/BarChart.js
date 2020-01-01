@@ -5,7 +5,7 @@ import { Bar } from 'react-chartjs-2';
 
 class BarChart extends Component {
   render() {
-    const values = this.props.values;
+    const values = this.props.values.slice().reverse();
 
     // chart data
     const valuesMap = new Map();
