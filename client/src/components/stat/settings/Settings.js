@@ -89,7 +89,7 @@ class Settings extends React.Component {
         <OverlayTrigger
           placement="right"
           overlay={props => (
-            <Tooltip {...props} show={props.show.toString()}>if active, this stat will be publicly displayed in the uStats showroom</Tooltip>)}>
+            <Tooltip {...props} show={props.show.toString()}>if active, this stat will be publicly displayed in the showroom</Tooltip>)}>
           <div className="custom-control custom-switch mt-2">
             <input type="checkbox" className="custom-control-input" id="showroom"
               checked={this.state.showroom}
