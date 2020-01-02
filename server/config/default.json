@@ -1,0 +1,8 @@
+{
+  "mongoDB": {
+    "url": "mongodb+srv://ustats:[PASSWORD]@ustats-pgwns.mongodb.net/ustats?retryWrites=true&w=majority"
+  },
+  "client": {
+    "url": "http://localhost:3000"
+  }
+}

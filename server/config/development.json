@@ -1,8 +1,0 @@
-{
-  "mongoDB": {
-    "url": "mongodb+srv://ustats:atlas4db@ustats-pgwns.mongodb.net/ustats?retryWrites=true&w=majority"
-  },
-  "client": {
-    "url": "http://localhost:3000"
-  }
-}
