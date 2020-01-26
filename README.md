@@ -5,8 +5,8 @@ the trackbase platform, currently in active development
 https://trackbase-test.herokuapp.com (may load for about 30 seconds because it still runs on a free Heroku dyno)
 
 ## Current todos
-[ ] refactor to React Functional Components and React Hooks
-[ ] complete the collections feature
+* [ ] refactor to React Functional Components and React Hooks
+* [ ] complete the collections feature
 
 ## Use cases
 * track data of IoT devices
